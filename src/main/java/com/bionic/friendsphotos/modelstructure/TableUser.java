@@ -7,6 +7,11 @@ public class TableUser {
     private String idDevice;
     private String fbProfile;
 
+    public TableUser(String idDevice, String fbProfile) {
+        this.idDevice = idDevice;
+        this.fbProfile = fbProfile;
+    }
+
     public String getIdDevice() {
         return idDevice;
     }
