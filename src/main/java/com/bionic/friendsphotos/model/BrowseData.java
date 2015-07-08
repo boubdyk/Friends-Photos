@@ -7,7 +7,7 @@ package com.bionic.friendsphotos.model;
 public class BrowseData {
     public static void main(String[] args) {
         FriendsPhotoDB data = new FriendsPhotoDB();
-        data.insertDataToTableGroups();
+        data.createGroup();
         for (TableGroups groups: data.selectAllFromTableGroups()) {
             System.out.println(groups.getId() + " " + groups.getName() + " " + groups.getType() + groups.getPassword() + " " + groups.getCreatorId());
         }

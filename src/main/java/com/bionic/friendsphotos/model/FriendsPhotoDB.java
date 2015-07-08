@@ -10,18 +10,33 @@ import java.util.ArrayList;
  */
 public class FriendsPhotoDB {
     final String INSERT_ID = "INSERT INTO sql482691.groups (id, name, type, pass, creator_id) VALUES (NULL, NULL, 0, NULL, NULL);";
+    final  String GET_LAST_INSERT_ID = "select last_insert_id();";
     final String SELECT_ALL_FROM_TABLE_GROUPS = "SELECT * FROM groups";
     ArrayList<TableGroups> groups = new ArrayList<TableGroups>();
     Statement statement;
     ResultSet resultSet;
     Connection connection;
     TableGroups objTableGroups;
+    int lastInsertId;
 
-    void insertDataToTableGroups() {
+    public int getLastInsertId() {
+        return lastInsertId;
+    }
+
+    public void setLastInsertId(int lastInsertId) {
+        this.lastInsertId = lastInsertId;
+    }
+
+    void createGroup() {
         try {
             connection = Connector.getConnection();
             statement = connection.createStatement();
             statement.executeUpdate(INSERT_ID);
+            resultSet = statement.executeQuery(GET_LAST_INSERT_ID);
+            while (resultSet.next()) {
+                setLastInsertId(resultSet.getInt(1));
+            }
+            System.out.println("\n\n" + getLastInsertId() + "\n\n");
         } catch (SQLException ex) {/*NOP*/}
         finally {
             try {
@@ -44,6 +59,7 @@ public class FriendsPhotoDB {
                 objTableGroups.setCreatorId(resultSet.getString(5));
                 groups.add(objTableGroups);
             }
+            System.out.println("\n\n" + getLastInsertId() + "\n\n");
         } catch (SQLException ex) {/*NOP*/}
         finally {
             try {
