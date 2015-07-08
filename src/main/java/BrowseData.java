@@ -17,10 +17,12 @@ public class BrowseData {
             System.out.println("FB: "+user.getFbProfile()+ ",  ID: "+user.getIdDevice());
         }
 
+        data.saveGroup(3, "Holliday", "ppp");
+        data.setPassword(3, "h111");
 
 
         /*data.createGroup();
-        for (TableGroup groups: data.selectAllFromTableGroups()) {
+        for (TableGroup groups: data.getAllGroups()) {
             System.out.println(groups.getId() + " " + groups.getName() + " " + groups.getType() + groups.getPassword() + " " + groups.getCreatorId());
         }*/
     }

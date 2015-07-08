@@ -5,17 +5,21 @@ package com.bionic.friendsphotos.modelstructure;
  */
 public class TableGroup {
     private int id;
-    private  String name;
-    private  int type;
+    private String name;
+    private byte type;
     private String password;
     private String creatorId;
 
-    public int getId() {
-        return id;
+    public TableGroup(int id, String name, byte type, String password, String creatorId) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.password = password;
+        this.creatorId = creatorId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -30,7 +34,7 @@ public class TableGroup {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(byte type) {
         this.type = type;
     }
 
@@ -44,9 +48,5 @@ public class TableGroup {
 
     public String getCreatorId() {
         return creatorId;
-    }
-
-    public void setCreatorId(String creatorId) {
-        this.creatorId = creatorId;
     }
 }
