@@ -1,4 +1,7 @@
-package com.bionic.friendsphotos.model;
+package com.bionic.friendsphotos.modelstructure;
+
+import com.bionic.friendsphotos.model.Connector;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,15 +11,15 @@ import java.util.ArrayList;
 /**
  * Created by c265 on 07.07.2015.
  */
-public class FriendsPhotoDB {
+public class Groups {
     final String INSERT_ID = "INSERT INTO sql482691.groups (id, name, type, pass, creator_id) VALUES (NULL, NULL, 0, NULL, NULL);";
     final  String GET_LAST_INSERT_ID = "select last_insert_id();";
     final String SELECT_ALL_FROM_TABLE_GROUPS = "SELECT * FROM groups";
-    ArrayList<TableGroups> groups = new ArrayList<TableGroups>();
+    ArrayList<TableGroup> groups = new ArrayList<TableGroup>();
     Statement statement;
     ResultSet resultSet;
     Connection connection;
-    TableGroups objTableGroups;
+    TableGroup objTableGroups;
     int lastInsertId;
 
     public int getLastInsertId() {
@@ -27,7 +30,7 @@ public class FriendsPhotoDB {
         this.lastInsertId = lastInsertId;
     }
 
-    void createGroup() {
+    public void createGroup() {
         try {
             connection = Connector.getConnection();
             statement = connection.createStatement();
@@ -45,13 +48,13 @@ public class FriendsPhotoDB {
         }
     }
 
-    ArrayList<TableGroups> selectAllFromTableGroups() {
+    public ArrayList<TableGroup> selectAllFromTableGroups() {
         try {
             connection = Connector.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(SELECT_ALL_FROM_TABLE_GROUPS);
             while (resultSet.next()) {
-                objTableGroups = new TableGroups();
+                objTableGroups = new TableGroup();
                 objTableGroups.setId(resultSet.getInt(1));
                 objTableGroups.setName(resultSet.getString(2));
                 objTableGroups.setType(resultSet.getInt(3));
