@@ -1,9 +1,9 @@
-package com.bionic.friendsphotos.model;
+package com.bionic.friendsphotos.modelstructure;
 
 /**
  * Created by c265 on 07.07.2015.
  */
-public class TableUsersInGroups {
+public class TableUsersInGroup {
     private String userDeviceId;
     private  int groupId;
 

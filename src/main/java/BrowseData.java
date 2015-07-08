@@ -1,4 +1,5 @@
-package com.bionic.friendsphotos.model;
+import com.bionic.friendsphotos.modelstructure.Groups;
+import com.bionic.friendsphotos.modelstructure.TableGroup;
 
 /**
  * Created by c265 on 07.07.2015.
@@ -6,9 +7,9 @@ package com.bionic.friendsphotos.model;
 
 public class BrowseData {
     public static void main(String[] args) {
-        FriendsPhotoDB data = new FriendsPhotoDB();
+        Groups data = new Groups();
         data.createGroup();
-        for (TableGroups groups: data.selectAllFromTableGroups()) {
+        for (TableGroup groups: data.selectAllFromTableGroups()) {
             System.out.println(groups.getId() + " " + groups.getName() + " " + groups.getType() + groups.getPassword() + " " + groups.getCreatorId());
         }
     }

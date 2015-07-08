@@ -14,7 +14,7 @@ public class Connector {
 
     private static Connection connection;
 
-    static final Connection getConnection() {
+    public static final Connection getConnection() {
         try {
              Class.forName("com.mysql.jdbc.Driver");
              connection = DriverManager.getConnection(HOST, USER_NAME, USER_PASSWORD);
