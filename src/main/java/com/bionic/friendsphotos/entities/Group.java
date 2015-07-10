@@ -1,13 +1,32 @@
 package com.bionic.friendsphotos.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.*;
+
 /**
  * Created by c265 on 07.07.2015.
  */
+
+@Entity
+@Table(name = "groups")
 public class Group {
+
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    @Column(name = "id", length = 6, nullable = false)
     private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "type")
     private byte type;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "creatorId")
     private String creatorId;
 
     public Group(int id, String name, byte type, String password, String creatorId) {
