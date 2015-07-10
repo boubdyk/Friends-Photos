@@ -1,16 +1,16 @@
-package com.bionic.friendsphotos.modelstructure;
+package com.bionic.friendsphotos.entities;
 
 /**
  * Created by c265 on 07.07.2015.
  */
-public class TableGroup {
+public class Group {
     private int id;
     private String name;
     private byte type;
     private String password;
     private String creatorId;
 
-    public TableGroup(int id, String name, byte type, String password, String creatorId) {
+    public Group(int id, String name, byte type, String password, String creatorId) {
         this.id = id;
         this.name = name;
         this.type = type;

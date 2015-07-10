@@ -1,13 +1,13 @@
-package com.bionic.friendsphotos.modelstructure;
+package com.bionic.friendsphotos.entities;
 
 /**
  * Created by c265 on 07.07.2015.
  */
-public class TableUser {
+public class User {
     private String idDevice;
     private String fbProfile;
 
-    public TableUser(String idDevice, String fbProfile) {
+    public User(String idDevice, String fbProfile) {
         this.idDevice = idDevice;
         this.fbProfile = fbProfile;
     }

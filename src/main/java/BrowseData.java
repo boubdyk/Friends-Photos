@@ -1,6 +1,5 @@
 import com.bionic.friendsphotos.modelstructure.Groups;
-import com.bionic.friendsphotos.modelstructure.TableGroup;
-import com.bionic.friendsphotos.modelstructure.TableUser;
+import com.bionic.friendsphotos.entities.User;
 
 import java.util.ArrayList;
 
@@ -11,9 +10,9 @@ import java.util.ArrayList;
 public class BrowseData {
     public static void main(String[] args) {
         Groups data = new Groups();
-        ArrayList<TableUser> users = data.getUsersInGroup(7);
+        ArrayList<User> users = data.getUsersInGroup(7);
 
-        for (TableUser user : users) {
+        for (User user : users) {
             System.out.println("FB: "+user.getFbProfile()+ ",  ID: "+user.getIdDevice());
         }
 
@@ -22,7 +21,7 @@ public class BrowseData {
 
 
         /*data.createGroup();
-        for (TableGroup groups: data.getAllGroups()) {
+        for (Group groups: data.getAllGroups()) {
             System.out.println(groups.getId() + " " + groups.getName() + " " + groups.getType() + groups.getPassword() + " " + groups.getCreatorId());
         }*/
     }

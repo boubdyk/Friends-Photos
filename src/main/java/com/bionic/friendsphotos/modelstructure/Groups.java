@@ -1,5 +1,7 @@
 package com.bionic.friendsphotos.modelstructure;
 
+import com.bionic.friendsphotos.entities.Group;
+import com.bionic.friendsphotos.entities.User;
 import com.bionic.friendsphotos.model.Connector;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -63,15 +65,15 @@ public class Groups {
         }
     }
 
-    public ArrayList<TableGroup> getAllGroups() {
-        ArrayList<TableGroup> groups = new ArrayList<TableGroup>();
-        TableGroup objTableGroups;
+    public ArrayList<Group> getAllGroups() {
+        ArrayList<Group> groups = new ArrayList<Group>();
+        Group objGroups;
         try {
             connection = Connector.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM groups");
             while (resultSet.next()) {
-                groups.add(new TableGroup(
+                groups.add(new Group(
                         resultSet.getInt(1),
                         resultSet.getString(2),
                         resultSet.getByte(3),
@@ -92,9 +94,9 @@ public class Groups {
         return groups;
     }
 
-    public ArrayList<TableUser> getUsersInGroup(int groupId) {
+    public ArrayList<User> getUsersInGroup(int groupId) {
         ArrayList<String> usersDeviceId = new ArrayList<String>();
-        ArrayList<TableUser> users = new ArrayList<TableUser>();
+        ArrayList<User> users = new ArrayList<User>();
 
         try {
             connection = Connector.getConnection();
@@ -108,7 +110,7 @@ public class Groups {
             for(String user: usersDeviceId){
                 resultSet = statement.executeQuery("SELECT * FROM users WHERE id_device = '" + user +"'");
                 while (resultSet.next()) {
-                    users.add(new TableUser(resultSet.getString(1), resultSet.getString(2)));
+                    users.add(new User(resultSet.getString(1), resultSet.getString(2)));
                 }
             }
         } catch (SQLException e) {
