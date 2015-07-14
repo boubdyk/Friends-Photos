@@ -1,33 +1,43 @@
-package com.bionic.friendsphotos.entities;
+package com.bionic.friendsphotos.entitie;
 
-import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
+//import org.hibernate.annotations.Entity;
 
 /**
  * Created by c265 on 07.07.2015.
  */
 
 @Entity
-@Table(name = "groups")
+@Table(name = "\"groups\"")
 public class Group {
 
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "id", length = 6, nullable = false)
+    /*@GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")*/
+    @Column(name = "id")
     private int id;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "type")
-    private byte type;
+    private Byte type;
 
-    @Column(name = "password")
+    @Column(name = "pass")
     private String password;
 
-    @Column(name = "creatorId")
+    @Column(name = "creator_id")
     private String creatorId;
+
+    public Group() {
+    }
+
+    public Group(String name, byte type, String password, String creatorId) {
+        this.name = name;
+        this.type = type;
+        this.password = password;
+        this.creatorId = creatorId;
+    }
 
     public Group(int id, String name, byte type, String password, String creatorId) {
         this.id = id;
@@ -67,5 +77,16 @@ public class Group {
 
     public String getCreatorId() {
         return creatorId;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", password='" + password + '\'' +
+                ", creatorId='" + creatorId + '\'' +
+                '}';
     }
 }

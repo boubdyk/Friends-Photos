@@ -1,22 +1,24 @@
-package com.bionic.friendsphotos.entities;
+package com.bionic.friendsphotos.entitie;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by c265 on 07.07.2015.
  */
 
 @Entity
+//@Embeddable
 @Table(name = "users")
 public class User {
 
+    @Id
     @Column(name = "id_device")
     private String idDevice;
 
     @Column(name = "fb_profile")
     private String fbProfile;
+
+    public User() {}
 
     public User(String idDevice, String fbProfile) {
         this.idDevice = idDevice;
