@@ -1,7 +1,8 @@
 package com.bionic.friendsphotos.entitie;
 
 import javax.persistence.*;
-//import org.hibernate.annotations.Entity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by c265 on 07.07.2015.
@@ -28,6 +29,9 @@ public class Group {
 
     @Column(name = "creator_id")
     private String creatorId;
+
+    @ManyToMany(mappedBy = "groups")
+    private List<User> users = new ArrayList<>();
 
     public Group() {
     }
@@ -88,5 +92,9 @@ public class Group {
                 ", password='" + password + '\'' +
                 ", creatorId='" + creatorId + '\'' +
                 '}';
+    }
+
+    public List<User> getUsers() {
+        return users;
     }
 }

@@ -1,13 +1,15 @@
 package com.bionic.friendsphotos.entitie;
 
 import javax.persistence.*;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by c265 on 07.07.2015.
  */
 
 @Entity
-//@Embeddable
 @Table(name = "users")
 public class User {
 
@@ -16,11 +18,21 @@ public class User {
     private String idDevice;
 
     @Column(name = "fb_profile")
-    private String fbProfile;
+    private BigInteger fbProfile;
 
     public User() {}
+    
 
-    public User(String idDevice, String fbProfile) {
+    @Column(name = "name")
+    private String name;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_in_groups",
+                joinColumns = {@JoinColumn(name = "user_id")},
+                inverseJoinColumns = {@JoinColumn(name = "group_id")})
+    private List<Group> groups = new ArrayList<Group>();
+
+    public User(String idDevice, BigInteger fbProfile) {
         this.idDevice = idDevice;
         this.fbProfile = fbProfile;
     }
@@ -33,11 +45,23 @@ public class User {
         this.idDevice = idDevice;
     }
 
-    public String getFbProfile() {
+    public BigInteger getFbProfile() {
         return fbProfile;
     }
 
-    public void setFbProfile(String fbProfile) {
+    public void setFbProfile(BigInteger fbProfile) {
         this.fbProfile = fbProfile;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
     }
 }
