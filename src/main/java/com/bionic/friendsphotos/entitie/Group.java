@@ -36,14 +36,14 @@ public class Group {
     public Group() {
     }
 
-    public Group(String name, byte type, String password, String creatorId) {
+    public Group(String name, Byte type, String password, String creatorId) {
         this.name = name;
         this.type = type;
         this.password = password;
         this.creatorId = creatorId;
     }
 
-    public Group(int id, String name, byte type, String password, String creatorId) {
+    public Group(int id, String name, Byte type, String password, String creatorId) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -63,11 +63,11 @@ public class Group {
         this.name = name;
     }
 
-    public int getType() {
+    public Byte getType() {
         return type;
     }
 
-    public void setType(byte type) {
+    public void setType(Byte type) {
         this.type = type;
     }
 
