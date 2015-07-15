@@ -10,13 +10,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "\"groups\"")
+@NamedQuery(name = "Group.getAll", query = "SELECT c from Group c")
 public class Group {
 
     @Id
-    /*@GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")*/
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -43,7 +42,7 @@ public class Group {
         this.creatorId = creatorId;
     }
 
-    public Group(int id, String name, Byte type, String password, String creatorId) {
+    public Group(Long id, String name, Byte type, String password, String creatorId) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -51,7 +50,7 @@ public class Group {
         this.creatorId = creatorId;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

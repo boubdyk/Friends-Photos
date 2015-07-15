@@ -10,13 +10,16 @@ import java.util.List;
 public class BrowseData {
     public static void main(String[] args) {
         GroupService groupService = new GroupService();
-        List<Group> list = groupService.getAll();
+        List<Group> list = groupService.getAllByBetterDao();
         for (Group groups: list) {
             System.out.format("%-5d %-25s %-3d %-20s %-40s %s", groups.getId(), groups.getName(),
                     groups.getType(), groups.getPassword(), groups.getCreatorId(), "\n");
         }
 
-        System.out.println("\n\n\nFind by id = 5   " + groupService.findById(5));
+
+
+        System.out.println("\n\n\nFind by id = 5   " + groupService.findById(5L));
+
         /*groupService.delete(16);
         list = groupService.getAll();
         for (Group groups: list) {
