@@ -13,8 +13,8 @@
         <property name="hibernate.connection.password">rU3*cI8*</property>
 
         <!-- List of XML mapping files -->
-        <mapping class="com.bionic.friendsphotos.entitie.Group"/>
-        <mapping class="com.bionic.friendsphotos.entitie.User"/>
+        <mapping class="com.bionic.friendsphotos.entity.Group"/>
+        <mapping class="com.bionic.friendsphotos.entity.User"/>
 
     </session-factory>
 </hibernate-configuration>

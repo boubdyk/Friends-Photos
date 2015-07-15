@@ -1,7 +1,6 @@
-import com.bionic.friendsphotos.entitie.Group;
+import com.bionic.friendsphotos.entity.Group;
 import com.bionic.friendsphotos.service.GroupService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,26 +9,19 @@ import java.util.List;
 
 public class BrowseData {
     public static void main(String[] args) {
-        /*Groups data = new Groups();
-        ArrayList<User> users = data.getUsersInGroup(7);*/
-
-       /* for (User user : users) {
-            System.out.println("FB: "+user.getFbProfile()+ ",  ID: "+user.getIdDevice());
-        }
-
-        data.saveGroup(3, "Holliday", "ppp");
-        data.setPassword(3, "h111");
-*/
-
-       /* data.createGroup();
-        for (Group groups: data.getAllGroups()) {
-            System.out.println(groups.getId() + " " + groups.getName() + " " + groups.getType() + groups.getPassword() + " " + groups.getCreatorId());
-        }*/
-
         GroupService groupService = new GroupService();
-        List<Group> list = groupService.findAll();
+        List<Group> list = groupService.getAll();
         for (Group groups: list) {
-            System.out.println(groups.getId() + " " + groups.getName() + " " + groups.getType() + groups.getPassword() + " " + groups.getCreatorId());
+            System.out.format("%-5d %-25s %-3d %-20s %-40s %s", groups.getId(), groups.getName(),
+                    groups.getType(), groups.getPassword(), groups.getCreatorId(), "\n");
         }
+
+        System.out.println("\n\n\nFind by id = 5   " + groupService.findById(5));
+        /*groupService.delete(16);
+        list = groupService.getAll();
+        for (Group groups: list) {
+            System.out.format("%-5d %-25s %-3d %-20s %-40s %s", groups.getId(), groups.getName(),
+                    groups.getType(), groups.getPassword(), groups.getCreatorId(), "\n");
+        }*/
     }
 }

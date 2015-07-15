@@ -1,7 +1,7 @@
 package com.bionic.friendsphotos.service;
 
 import com.bionic.friendsphotos.dao.GroupDao;
-import com.bionic.friendsphotos.entitie.Group;
+import com.bionic.friendsphotos.entity.Group;
 
 import java.util.List;
 
@@ -17,45 +17,33 @@ public class GroupService {
     }
 
     public void persist(Group entity) {
-        groupDao.openCurrentSessionWithTransaction();
         groupDao.persist(entity);
-        groupDao.closeCurrentSessionwithTransaction();
     }
 
     public void update(Group entity) {
-        groupDao.openCurrentSessionWithTransaction();
         groupDao.update(entity);
-        groupDao.closeCurrentSessionwithTransaction();
     }
 
-    public Group findById(String id) {
-        groupDao.openCurrentSession();
+    public Group findById(Integer id) {
         Group group = groupDao.read(id);
-        groupDao.closeCurrentSession();
         return group;
     }
 
-    public void delete(String id) {
-        groupDao.openCurrentSessionWithTransaction();
+    public void delete(Integer id) {
         Group group = groupDao.read(id);
         groupDao.delete(group);
-        groupDao.closeCurrentSessionwithTransaction();
     }
 
-    public List<Group> findAll() {
-        groupDao.openCurrentSession();
+    public List<Group> getAll() {
         List<Group> groups = groupDao.getAll();
-        groupDao.closeCurrentSession();
         return groups;
     }
 
     public void deleteAll() {
-        groupDao.openCurrentSessionWithTransaction();
         groupDao.deleteAll();
-        groupDao.closeCurrentSessionwithTransaction();
     }
 
-    public GroupDao bookDao() {
+    public GroupDao groupDao() {
         return groupDao;
     }
 }

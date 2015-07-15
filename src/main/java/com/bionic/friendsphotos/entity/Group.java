@@ -1,4 +1,4 @@
-package com.bionic.friendsphotos.entitie;
+package com.bionic.friendsphotos.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package com.bionic.friendsphotos.dao;
 
-import com.bionic.friendsphotos.entitie.Group;
-import com.bionic.friendsphotos.entitie.User;
+import com.bionic.friendsphotos.entity.Group;
+import com.bionic.friendsphotos.entity.User;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
