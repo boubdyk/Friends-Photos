@@ -30,21 +30,21 @@ public class GroupService {
 
     public Group findById(String id) {
         groupDao.openCurrentSession();
-        Group group = groupDao.findById(id);
+        Group group = groupDao.read(id);
         groupDao.closeCurrentSession();
         return group;
     }
 
     public void delete(String id) {
         groupDao.openCurrentSessionWithTransaction();
-        Group group = groupDao.findById(id);
+        Group group = groupDao.read(id);
         groupDao.delete(group);
         groupDao.closeCurrentSessionwithTransaction();
     }
 
     public List<Group> findAll() {
         groupDao.openCurrentSession();
-        List<Group> groups = groupDao.findAll();
+        List<Group> groups = groupDao.getAll();
         groupDao.closeCurrentSession();
         return groups;
     }
