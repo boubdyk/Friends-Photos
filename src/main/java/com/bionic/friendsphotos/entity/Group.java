@@ -15,6 +15,7 @@ public class Group {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue
     private Long id;
 
     @Column(name = "name")
@@ -30,7 +31,7 @@ public class Group {
     private String creatorId;
 
     @ManyToMany(mappedBy = "groups")
-    private List<User> users = new ArrayList<>();
+    private List<Devices> devices = new ArrayList<>();
 
     public Group() {
     }
@@ -93,7 +94,7 @@ public class Group {
                 '}';
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<Devices> getDevices() {
+        return devices;
     }
 }

@@ -8,23 +8,47 @@ import java.util.List;
  */
 
 public class BrowseData {
-    public static void main(String[] args) {
-        GroupService groupService = new GroupService();
-        List<Group> list = groupService.getAllByBetterDao();
+    static GroupService groupService;
+
+    static void browseTableGroup() {
+        System.out.println("\n");
+        List<Group> list = groupService.getAllGroups();
         for (Group groups: list) {
             System.out.format("%-5d %-25s %-3d %-20s %-40s %s", groups.getId(), groups.getName(),
                     groups.getType(), groups.getPassword(), groups.getCreatorId(), "\n");
         }
+        System.out.println();
+    }
 
+    public static void main(String[] args) {
+        groupService = new GroupService();
 
+        //browse data
+        browseTableGroup();
 
-        System.out.println("\n\n\nFind by id = 5   " + groupService.findById(5L));
+        //checking method findById()
+        System.out.println("\n\n\nFind by id = 5   " + groupService.findById(600L));
 
-        /*groupService.delete(16);
-        list = groupService.getAll();
-        for (Group groups: list) {
-            System.out.format("%-5d %-25s %-3d %-20s %-40s %s", groups.getId(), groups.getName(),
-                    groups.getType(), groups.getPassword(), groups.getCreatorId(), "\n");
-        }*/
+        //checking method create()
+        /*Group obj = new Group(null, "Tra-ta-ta", new Byte(String.valueOf(1)), "olo-lo", "boooooooooooo");
+        System.out.println(groupService.createGroup(obj));
+        browseTableGroup();*/
+
+        //checking method update()
+        Group obj1 = new Group(null, null, null, null);
+        groupService.updateGroup(obj1);
+        browseTableGroup();
+
+        //checking method delete()
+        System.out.println(groupService.deleteGroup(32L));
+        browseTableGroup();
+
+        //checking method getNameById()
+        System.out.println(groupService.getNameById(30L));
+        System.out.println(groupService.getNameById(300L));
+
+        Group obj = new Group();
+        System.out.println(groupService.createGroup(obj));
+        browseTableGroup();
     }
 }
