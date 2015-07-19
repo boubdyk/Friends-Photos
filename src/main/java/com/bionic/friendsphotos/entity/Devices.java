@@ -27,10 +27,10 @@ public class Devices {
     @Column(name = "description")
     String description;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "devices_in_groups",
-            joinColumns = {@JoinColumn(name = "device_id")},
-            inverseJoinColumns = {@JoinColumn(name = "group_id")})
+            joinColumns = {@JoinColumn(name = "device_id", referencedColumnName = "id_device")},
+            inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")})
     private List<Group> groups = new ArrayList<>();
 
     public Devices() {}

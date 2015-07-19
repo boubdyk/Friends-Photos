@@ -40,21 +40,22 @@ public class BrowseData {
         groupService = new GroupService();
         devicesService = new DevicesService();
 
-        Devices dv = new Devices("bbb", new BigInteger(String.valueOf(45454)), "Android");
+        Devices dv = new Devices("eee", new BigInteger(String.valueOf(45454)), "Android");
+//        devicesService.addNewDevice(dv);
 //
 //        ArrayList<Devices> list = new ArrayList<Devices>();
 //        list.add(dv);
 
-//        Group gr = new Group("DFGDFG", new Byte(String.valueOf(1)), "dfdffffff", list);
-//        groupService.createGroup(gr);
+        Group gr = new Group("DFGDFG", new Byte(String.valueOf(1)), "dfdffffff", "aaa");
+        groupService.createGroup(gr);
 
         //browse data
-//        devicesService.addNewDevice(dv);
+
         browseTableGroup();
         browseTableDevices();
 
         System.out.println(groupService.getIdOfAllDevicesInCurrentGroup(10L));
-        System.out.println(devicesService.getIdOfAllDevicesInCurrentGroup("aaa"));
+        System.out.println(devicesService.getIdOfAllDevicesInCurrentGroup("bbb"));
 //        System.out.println(devicesService.getIdOfAllDevicesInCurrentGroup("bbb"));
 
     }
