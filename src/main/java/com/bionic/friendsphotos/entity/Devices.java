@@ -31,7 +31,7 @@ public class Devices {
     @JoinTable(name = "devices_in_groups",
             joinColumns = {@JoinColumn(name = "device_id", referencedColumnName = "id_device")},
             inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")})
-    private List<Group> groups = new ArrayList<>();
+    private List<Group> groups;
 
     public Devices() {}
 

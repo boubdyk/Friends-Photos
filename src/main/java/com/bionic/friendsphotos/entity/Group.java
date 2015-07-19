@@ -34,7 +34,7 @@ public class Group {
     @JoinTable(name = "devices_in_groups",
             joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "device_id", referencedColumnName = "id_device")})
-    private List<Devices> devices = new ArrayList<>();
+    private List<Devices> devices;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "creator_id")

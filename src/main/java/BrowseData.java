@@ -46,7 +46,7 @@ public class BrowseData {
 //        ArrayList<Devices> list = new ArrayList<Devices>();
 //        list.add(dv);
 
-        Group gr = new Group("DFGDFG", new Byte(String.valueOf(1)), "dfdffffff", "aaa");
+        Group gr = new Group("DFGDFG", new Byte(String.valueOf(1)), "dfdffffff", "bbb");
         groupService.createGroup(gr);
 
         //browse data
@@ -54,6 +54,7 @@ public class BrowseData {
         browseTableGroup();
         browseTableDevices();
 
+        System.out.println();
         System.out.println(groupService.getIdOfAllDevicesInCurrentGroup(10L));
         System.out.println(devicesService.getIdOfAllDevicesInCurrentGroup("bbb"));
 //        System.out.println(devicesService.getIdOfAllDevicesInCurrentGroup("bbb"));
