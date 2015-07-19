@@ -11,7 +11,11 @@ import java.util.List;
  * Created by c265 on 17.07.2015.
  */
 public class DevicesService {
-    DevicesDao devicesDao = new DevicesDao();
+    DevicesDao devicesDao;
+
+    public DevicesService() {
+        devicesDao  = new DevicesDao();
+    }
 
     public List<Long> getIdOfAllDevicesInCurrentGroup(String devicesId) {
         List<Long> list = new ArrayList<>();
@@ -19,5 +23,17 @@ public class DevicesService {
             list.add(g.getId());
         }
         return list;
+    }
+
+    public void addNewDevice(Devices obj) {
+        devicesDao.create(obj);
+    }
+
+    public Devices findById(String id) {
+        return devicesDao.read(id);
+    }
+
+    public List<Devices> getAllDevices() {
+        return devicesDao.getAll();
     }
 }

@@ -5,6 +5,7 @@ import com.bionic.friendsphotos.entity.Group;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -40,6 +41,11 @@ public class DevicesDao implements GenericDao <Devices, String> {
         em.getTransaction().begin();
         em.remove(persistentObject);
         em.getTransaction().commit();
+    }
+
+    public List<Devices> getAll() {
+        TypedQuery<Devices> namedQuery = em.createNamedQuery("Devices.getAll", Devices.class);
+        return namedQuery.getResultList();
     }
 
     public List<Group> getAllGroupsOfCurrentDevice(String deviceId) {

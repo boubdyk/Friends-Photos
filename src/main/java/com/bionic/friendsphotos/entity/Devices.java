@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "devices")
+@NamedQuery(name = "Devices.getAll", query = "SELECT c from Devices c")
 public class Devices {
 
     @Id
@@ -34,9 +35,10 @@ public class Devices {
 
     public Devices() {}
 
-    public Devices(String idDevice, BigInteger fbProfile) {
+    public Devices(String idDevice, BigInteger fbProfile, String description) {
         this.idDevice = idDevice;
         this.fbProfile = fbProfile;
+        this.description = description;
     }
 
     public String getIdDevice() {
@@ -65,6 +67,14 @@ public class Devices {
 
     public List<Group> getGroups() {
         return groups;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

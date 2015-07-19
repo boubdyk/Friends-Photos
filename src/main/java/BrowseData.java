@@ -26,11 +26,21 @@ public class BrowseData {
         System.out.println();
     }
 
+    static void browseTableDevices() {
+        System.out.println();
+        for (Devices devices: devicesService.getAllDevices()) {
+            System.out.format("%-30s %-20s %-20d %-20s %s", devices.getIdDevice(),
+                    devices.getDescription(),
+                    devices.getFbProfile(),
+                    devices.getName(), "\n");
+        }
+    }
+
     public static void main(String[] args) {
         groupService = new GroupService();
         devicesService = new DevicesService();
 
-//        Devices dv = new Devices("bbb", new BigInteger(String.valueOf(45454)));
+        Devices dv = new Devices("bbb", new BigInteger(String.valueOf(45454)), "Android");
 //
 //        ArrayList<Devices> list = new ArrayList<Devices>();
 //        list.add(dv);
@@ -39,7 +49,9 @@ public class BrowseData {
 //        groupService.createGroup(gr);
 
         //browse data
+//        devicesService.addNewDevice(dv);
         browseTableGroup();
+        browseTableDevices();
 
         System.out.println(groupService.getIdOfAllDevicesInCurrentGroup(10L));
         System.out.println(devicesService.getIdOfAllDevicesInCurrentGroup("aaa"));
