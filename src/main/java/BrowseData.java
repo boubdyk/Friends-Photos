@@ -1,6 +1,11 @@
+import com.bionic.friendsphotos.entity.Devices;
 import com.bionic.friendsphotos.entity.Group;
+import com.bionic.friendsphotos.service.DevicesService;
 import com.bionic.friendsphotos.service.GroupService;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -9,6 +14,7 @@ import java.util.List;
 
 public class BrowseData {
     static GroupService groupService;
+    static DevicesService devicesService;
 
     static void browseTableGroup() {
         System.out.println("\n");
@@ -22,33 +28,22 @@ public class BrowseData {
 
     public static void main(String[] args) {
         groupService = new GroupService();
+        devicesService = new DevicesService();
+
+//        Devices dv = new Devices("bbb", new BigInteger(String.valueOf(45454)));
+//
+//        ArrayList<Devices> list = new ArrayList<Devices>();
+//        list.add(dv);
+
+//        Group gr = new Group("DFGDFG", new Byte(String.valueOf(1)), "dfdffffff", list);
+//        groupService.createGroup(gr);
 
         //browse data
         browseTableGroup();
 
-        //checking method findById()
-        System.out.println("\n\n\nFind by id = 5   " + groupService.findById(600L));
+        System.out.println(groupService.getIdOfAllDevicesInCurrentGroup(10L));
+        System.out.println(devicesService.getIdOfAllDevicesInCurrentGroup("aaa"));
+//        System.out.println(devicesService.getIdOfAllDevicesInCurrentGroup("bbb"));
 
-        //checking method create()
-        /*Group obj = new Group(null, "Tra-ta-ta", new Byte(String.valueOf(1)), "olo-lo", "boooooooooooo");
-        System.out.println(groupService.createGroup(obj));
-        browseTableGroup();*/
-
-        //checking method update()
-        Group obj1 = new Group(null, null, null, null);
-        groupService.updateGroup(obj1);
-        browseTableGroup();
-
-        //checking method delete()
-        System.out.println(groupService.deleteGroup(32L));
-        browseTableGroup();
-
-        //checking method getNameById()
-        System.out.println(groupService.getNameById(30L));
-        System.out.println(groupService.getNameById(300L));
-
-        Group obj = new Group();
-        System.out.println(groupService.createGroup(obj));
-        browseTableGroup();
     }
 }

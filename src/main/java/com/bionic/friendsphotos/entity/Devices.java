@@ -30,7 +30,7 @@ public class Devices {
     @JoinTable(name = "devices_in_groups",
             joinColumns = {@JoinColumn(name = "device_id")},
             inverseJoinColumns = {@JoinColumn(name = "group_id")})
-    private List<Group> groups = new ArrayList<Group>();
+    private List<Group> groups = new ArrayList<>();
 
     public Devices() {}
 
@@ -65,5 +65,20 @@ public class Devices {
 
     public List<Group> getGroups() {
         return groups;
+    }
+
+    @Override
+    public String toString() {
+        List<Long> groupId = new ArrayList<>();
+        for (Group g: getGroups()) {
+            groupId.add(g.getId());
+        }
+        return "Devices{" +
+                "idDevice='" + idDevice + '\'' +
+                ", fbProfile=" + fbProfile +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", groups=" + groupId +
+                '}';
     }
 }

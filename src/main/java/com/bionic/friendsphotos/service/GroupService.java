@@ -1,8 +1,10 @@
 package com.bionic.friendsphotos.service;
 
 import com.bionic.friendsphotos.dao.GroupDao;
+import com.bionic.friendsphotos.entity.Devices;
 import com.bionic.friendsphotos.entity.Group;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,6 +60,14 @@ public class GroupService {
         } catch (NullPointerException ex) {
             return "Group doesn't exist!";
         }
+    }
+
+    public List<String> getIdOfAllDevicesInCurrentGroup(Long groupId) {
+        List<String> list = new ArrayList<>();
+        for (Devices d: groupDao.getAllDevicesFromGroup(groupId)) {
+            list.add(d.getIdDevice());
+        }
+        return list;
     }
 
 }

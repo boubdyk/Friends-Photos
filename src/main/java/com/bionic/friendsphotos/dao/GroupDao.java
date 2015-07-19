@@ -1,5 +1,6 @@
 package com.bionic.friendsphotos.dao;
 
+import com.bionic.friendsphotos.entity.Devices;
 import com.bionic.friendsphotos.entity.Group;
 
 import javax.persistence.EntityManager;
@@ -54,5 +55,10 @@ public class GroupDao implements GenericDao <Group, Long> {
 
     public String getNameById(Long id) {
         return em.find(Group.class, id).getName();
+    }
+
+    public List<Devices> getAllDevicesFromGroup(Long groupId) {
+        Group obj = read(groupId);
+        return obj.getDevices();
     }
 }

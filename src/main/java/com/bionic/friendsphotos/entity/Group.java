@@ -30,7 +30,10 @@ public class Group {
     @Column(name = "creator_id")
     private String creatorId;
 
-    @ManyToMany(mappedBy = "groups")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "devices_in_groups",
+            joinColumns = {@JoinColumn(name = "group_id")},
+            inverseJoinColumns = {@JoinColumn(name = "device_id")})
     private List<Devices> devices = new ArrayList<>();
 
     public Group() {
@@ -85,12 +88,17 @@ public class Group {
 
     @Override
     public String toString() {
+        List<String> devicesId = new ArrayList<>();
+        for (Devices d: getDevices()) {
+            devicesId.add(d.getIdDevice());
+        }
         return "Group{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", type=" + type +
                 ", password='" + password + '\'' +
                 ", creatorId='" + creatorId + '\'' +
+                ", devices='" + devicesId + '\'' +
                 '}';
     }
 

@@ -1,6 +1,7 @@
 package com.bionic.friendsphotos.dao;
 
 import com.bionic.friendsphotos.entity.Devices;
+import com.bionic.friendsphotos.entity.Group;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -12,8 +13,6 @@ import java.util.List;
 public class DevicesDao implements GenericDao <Devices, String> {
 
     EntityManager em = Persistence.createEntityManagerFactory("FRIENDSPHOTO").createEntityManager();
-
-
 
     @Override
     public String create(Devices newInstance) {
@@ -43,8 +42,8 @@ public class DevicesDao implements GenericDao <Devices, String> {
         em.getTransaction().commit();
     }
 
-    List<Devices> getAllDevicesFromGroup(Long groupId) {
-        String query = "SELECT d.device_id FROM devices_in_groups d where group_id=" + groupId + ";";
-        return em.createQuery(query).getResultList();
+    public List<Group> getAllGroupsOfCurrentDevice(String deviceId) {
+        Devices obj = read(deviceId);
+        return obj.getGroups();
     }
 }
