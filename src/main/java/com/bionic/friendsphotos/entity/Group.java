@@ -29,6 +29,9 @@ public class Group {
     @Column(name = "pass")
     private String password;
 
+    @Column(name = "id_creator")
+    private String idCreator;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "devices_in_groups",
             joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")},
@@ -84,6 +87,14 @@ public class Group {
         this.password = password;
     }
 
+    public String getIdCreator() {
+        return idCreator;
+    }
+
+    public void setIdCreator(String idCreator) {
+        this.idCreator = idCreator;
+    }
+
     public Set<Devices> getDevices() {
         return devices;
     }
@@ -103,6 +114,7 @@ public class Group {
                 ", name='" + name + '\'' +
                 ", type=" + type +
                 ", password='" + password + '\'' +
+                ", idCreator='" + idCreator + '\'' +
                 ", devices='" + devicesId + '\'' +
                 '}';
     }
