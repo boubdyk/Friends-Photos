@@ -75,4 +75,9 @@ public class GroupDao implements GenericDao <Group, Long> {
         read(groupId).setDevices(list);
     }
 
+    public void addDeviceToGroup(Long groupId, Devices obj) {
+        Set<Devices> list = read(groupId).getDevices();
+        list.add(obj);
+    }
+
 }

@@ -36,26 +36,23 @@ public class BrowseData {
 
     public static void main(String[] args) {
 
-        Group group = groupService.findById(40L);
-        group.setIdCreator("pppppp");
-        System.out.println(group);
-        Devices dv = devicesService.findById("pppppp");
-        Devices dv1 = devicesService.findById("erer");
-        Devices dv2 = devicesService.findById("ioioioi");
-        System.out.println(dv + "\n" + dv1 + "\n" + dv2);
-        Set<Devices> list = group.getDevices();
-        list.add(dv);
-        list.add(dv1);
-        list.add(dv2);
-
-        group.setDevices(list);
-//        groupService.createGroup(group);
-        groupService.updateGroup(group);
-
-
-        System.out.println("All Devices : " + group);
-        groupService.deleteDeviceFromGroup(40L, "erer");
-        System.out.println("All Devices : " + group);
+//        Group group = groupService.findById(40L);
+//        group.setIdCreator("pppppp");
+//        System.out.println(group);
+//        Devices dv = devicesService.findById("pppppp");
+//        Devices dv1 = devicesService.findById("erer");
+//        Devices dv2 = devicesService.findById("ioioioi");
+//        System.out.println(dv + "\n" + dv1 + "\n" + dv2);
+//        Set<Devices> list = group.getDevices();
+//        list.add(dv);
+//        list.add(dv1);
+//        list.add(dv2);
+//        group.setDevices(list);
+//        groupService.updateGroup(group);
+//
+//        System.out.println("All Devices : " + group);
+//        groupService.deleteDeviceFromGroup(40L, "erer");
+//        System.out.println("All Devices : " + group);
 
 
 //        Devices dv = devicesService.findById("ioioioi");
@@ -80,5 +77,22 @@ public class BrowseData {
         browseTableDevices();
 
         System.out.println();
+
+        Devices d = devicesService.findById("pppppp");
+        Group g1 = groupService.findById(2L);
+        devicesService.addGroupToDevice(d.getIdDevice(), g1.getId());
+        System.out.println(d);
+
+        devicesService.deleteGroupFromDevice("pppppp", g1.getId());
+        System.out.println(d);
+
+
+
+        Group g2 = groupService.findById(3L);
+        System.out.println(g2);
+        groupService.addDeviceToGroup(g2.getId(), d.getIdDevice());
+        System.out.println(g2);
+        groupService.deleteDeviceFromGroup(g2.getId(), d.getIdDevice());
+        System.out.println(g2);
     }
 }

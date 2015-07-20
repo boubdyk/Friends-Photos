@@ -66,4 +66,10 @@ public class DevicesDao implements GenericDao <Devices, String> {
         }
         read(deviceId).setGroups(list);
     }
+
+    public void addGroupToDevice(String deviceId, Group obj) {
+        Set<Group> list = read(deviceId).getGroups();
+        list.add(obj);
+        read(deviceId).setGroups(list);
+    }
 }
