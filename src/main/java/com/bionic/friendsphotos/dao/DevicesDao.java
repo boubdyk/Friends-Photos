@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class DevicesDao implements GenericDao <Devices, String> {
 
-    EntityManager em = Persistence.createEntityManagerFactory("FRIENDSPHOTO").createEntityManager();
+    private EntityManager em = EMFactory.getInstance();
 
     @Override
     public String create(Devices newInstance) {
@@ -30,9 +30,10 @@ public class DevicesDao implements GenericDao <Devices, String> {
 
     @Override
     public Devices update(Devices transientObject) {
-        em.getTransaction().begin();
+        em.find(Devices.class, transientObject.getIdDevice());
+//        em.getTransaction().begin();
         em.merge(transientObject);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
         return transientObject;
     }
 

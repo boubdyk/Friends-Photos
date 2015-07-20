@@ -14,7 +14,7 @@ import java.util.List;
 
 public class GroupDao implements GenericDao <Group, Long> {
 
-    private EntityManager em = Persistence.createEntityManagerFactory("FRIENDSPHOTO").createEntityManager();
+    private EntityManager em = EMFactory.getInstance();
 
     public GroupDao() {
     }
@@ -61,4 +61,5 @@ public class GroupDao implements GenericDao <Group, Long> {
         Group obj = read(groupId);
         return obj.getDevices();
     }
+
 }

@@ -27,35 +27,31 @@ public class Group {
     @Column(name = "pass")
     private String password;
 
-    @Column(name = "creator_id")
-    private String creatorId;
-
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "devices_in_groups",
             joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "device_id", referencedColumnName = "id_device")})
+//    @ManyToMany(mappedBy = "groups")
     private List<Devices> devices;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "creator_id")
-//    private Devices creator;
 
     public Group() {
     }
 
-    public Group(String name, Byte type, String password, String creatorId) {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Group(String name, Byte type, String password) {
         this.name = name;
         this.type = type;
         this.password = password;
-        this.creatorId = creatorId;
     }
 
-    public Group(Long id, String name, Byte type, String password, String creatorId) {
+    public Group(Long id, String name, Byte type, String password) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.password = password;
-        this.creatorId = creatorId;
     }
 
     public Long getId() {
@@ -86,8 +82,12 @@ public class Group {
         this.password = password;
     }
 
-    public String getCreatorId() {
-        return creatorId;
+    public List<Devices> getDevices() {
+        return devices;
+    }
+
+    public void setDevices(List<Devices> devices) {
+        this.devices = devices;
     }
 
     @Override
@@ -101,12 +101,7 @@ public class Group {
                 ", name='" + name + '\'' +
                 ", type=" + type +
                 ", password='" + password + '\'' +
-                ", creatorId='" + creatorId + '\'' +
                 ", devices='" + devicesId + '\'' +
                 '}';
-    }
-
-    public List<Devices> getDevices() {
-        return devices;
     }
 }

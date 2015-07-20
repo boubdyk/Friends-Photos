@@ -70,4 +70,11 @@ public class GroupService {
         return list;
     }
 
+//    public List<Devices> setDeviceToGroup(Devices d, Long id) {
+//        return groupDao.setDeviceToGroup(d, id);
+//    }
+
+    public List<Devices> getAllDevices(Long id) {
+        return groupDao.getAllDevicesFromGroup(id);
+    }
 }
