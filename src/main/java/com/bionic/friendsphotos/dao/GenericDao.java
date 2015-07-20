@@ -19,10 +19,10 @@ public interface GenericDao <T, PK extends Serializable> {
     /**
      * Save changes to DataBase that has been made in object
      */
-    void update(T transientObject);
+    T update(T transientObject);
 
     /**
      * Delete object from DataBase
      */
-    void delete(T persistentObject);
+    void delete(PK persistentObject);
 }

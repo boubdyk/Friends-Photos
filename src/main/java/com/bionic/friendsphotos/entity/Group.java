@@ -15,6 +15,7 @@ public class Group {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue
     private Long id;
 
     @Column(name = "name")
@@ -29,8 +30,15 @@ public class Group {
     @Column(name = "creator_id")
     private String creatorId;
 
-    @ManyToMany(mappedBy = "groups")
-    private List<User> users = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "devices_in_groups",
+            joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "device_id", referencedColumnName = "id_device")})
+    private List<Devices> devices;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "creator_id")
+//    private Devices creator;
 
     public Group() {
     }
@@ -84,16 +92,21 @@ public class Group {
 
     @Override
     public String toString() {
+        List<String> devicesId = new ArrayList<>();
+        for (Devices d: getDevices()) {
+            devicesId.add(d.getIdDevice());
+        }
         return "Group{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", type=" + type +
                 ", password='" + password + '\'' +
                 ", creatorId='" + creatorId + '\'' +
+                ", devices='" + devicesId + '\'' +
                 '}';
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<Devices> getDevices() {
+        return devices;
     }
 }

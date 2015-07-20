@@ -1,26 +1,51 @@
 package com.bionic.friendsphotos.dao;
 
+import com.bionic.friendsphotos.entity.Devices;
 import com.bionic.friendsphotos.entity.Group;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by c265 on 15.07.2015.
  */
 
-public class GroupDao <T, PK extends Serializable>
-        implements GenericDao <T, PK> {
-
-    private Class<T> type;
+public class GroupDao implements GenericDao <Group, Long> {
 
     private EntityManager em = Persistence.createEntityManagerFactory("FRIENDSPHOTO").createEntityManager();
 
-    public GroupDao(Class<T> type) {
-        this.type = type;
+    public GroupDao() {
+    }
+
+    @Override
+    public Long create(Group newInstance) {
+        em.getTransaction().begin();
+        em.persist(newInstance);
+        em.getTransaction().commit();
+        return newInstance.getId();
+    }
+
+
+    @Override
+    public Group read(Long id) {
+        return em.find(Group.class, id);
+    }
+
+    @Override
+    public Group update(Group transientObject) {
+        em.find(Group.class, transientObject.getId());
+        em.merge(transientObject);
+        return transientObject;
+    }
+
+    @Override
+    public void delete(Long id) {
+        Group obj = read(id);
+        em.getTransaction().begin();
+        em.remove(obj);
+        em.getTransaction().commit();
     }
 
     public List<Group> getAll() {
@@ -28,24 +53,12 @@ public class GroupDao <T, PK extends Serializable>
         return namedQuery.getResultList();
     }
 
-
-    @Override
-    public PK create(T newInstance) {
-        return null;
+    public String getNameById(Long id) {
+        return em.find(Group.class, id).getName();
     }
 
-    @Override
-    public T read(PK id) {
-        return em.find(type, id);
-    }
-
-    @Override
-    public void update(T transientObject) {
-
-    }
-
-    @Override
-    public void delete(T persistentObject) {
-
+    public List<Devices> getAllDevicesFromGroup(Long groupId) {
+        Group obj = read(groupId);
+        return obj.getDevices();
     }
 }
