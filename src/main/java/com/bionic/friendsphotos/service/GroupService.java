@@ -1,8 +1,8 @@
 package com.bionic.friendsphotos.service;
 
-import com.bionic.friendsphotos.dao.DevicesDao;
+import com.bionic.friendsphotos.dao.DeviceDao;
 import com.bionic.friendsphotos.dao.GroupDao;
-import com.bionic.friendsphotos.entity.Devices;
+import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.Set;
 public class GroupService {
 
     private static GroupDao groupDao;
-    private static DevicesDao devicesDao;
+    private static DeviceDao devicesDao;
 
     public GroupService() {
         groupDao = new GroupDao();
@@ -67,13 +67,13 @@ public class GroupService {
 
     public List<String> getIdOfAllDevicesInCurrentGroup(Long groupId) {
         List<String> list = new ArrayList<>();
-        for (Devices d: groupDao.getAllDevicesFromGroup(groupId)) {
+        for (Device d: groupDao.getAllDevicesFromGroup(groupId)) {
             list.add(d.getIdDevice());
         }
         return list;
     }
 
-    public Set<Devices> getAllDevices(Long id) {
+    public Set<Device> getAllDevices(Long id) {
         return groupDao.getAllDevicesFromGroup(id);
     }
 
@@ -82,7 +82,7 @@ public class GroupService {
     }
 
     public void addDeviceToGroup(Long groupId, String deviceId) {
-        devicesDao = new DevicesDao();
+        devicesDao = new DeviceDao();
         groupDao.addDeviceToGroup(groupId, devicesDao.read(deviceId));
     }
 }
