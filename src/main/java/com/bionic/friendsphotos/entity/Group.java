@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "\"groups\"")
-@NamedQuery(name = "Group.getAll", query = "SELECT c from Group c")
+@NamedQuery(name = "Group.getAll", query = "SELECT g from Group g")
 public class Group {
 
     @Id
@@ -37,7 +37,7 @@ public class Group {
             joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "device_id", referencedColumnName = "id_device")})
 //    @ManyToMany(mappedBy = "groups")
-    private Set<Devices> devices;
+    private Set<Device> devices;
 
     public Group() {
     }
@@ -95,18 +95,18 @@ public class Group {
         this.idCreator = idCreator;
     }
 
-    public Set<Devices> getDevices() {
+    public Set<Device> getDevices() {
         return devices;
     }
 
-    public void setDevices(Set<Devices> devices) {
+    public void setDevices(Set<Device> devices) {
         this.devices = devices;
     }
 
     @Override
     public String toString() {
         Set<String> devicesId = new HashSet<>();
-        for (Devices d: getDevices()) {
+        for (Device d: getDevices()) {
             devicesId.add(d.getIdDevice());
         }
         return "Group{" +

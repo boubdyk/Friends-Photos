@@ -1,9 +1,8 @@
-import com.bionic.friendsphotos.entity.Devices;
+import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
 import com.bionic.friendsphotos.service.DevicesService;
 import com.bionic.friendsphotos.service.GroupService;
 
-import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -26,7 +25,7 @@ public class BrowseData {
 
     static void browseTableDevices() {
         System.out.println();
-        for (Devices devices: devicesService.getAllDevices()) {
+        for (Device devices: devicesService.getAll()) {
             System.out.format("%-30s %-20s %-20d %-20s %s", devices.getIdDevice(),
                     devices.getDescription(),
                     devices.getFbProfile(),
@@ -78,7 +77,7 @@ public class BrowseData {
 
         System.out.println();
 
-        Devices d = devicesService.findById("pppppp");
+        Device d = devicesService.findById("pppppp");
         Group g1 = groupService.findById(2L);
         devicesService.addGroupToDevice(d.getIdDevice(), g1.getId());
         System.out.println(d);

@@ -1,10 +1,9 @@
 package com.bionic.friendsphotos.dao;
 
-import com.bionic.friendsphotos.entity.Devices;
+import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.Iterator;
 import java.util.List;
@@ -13,12 +12,12 @@ import java.util.Set;
 /**
  * Created by c265 on 17.07.2015.
  */
-public class DevicesDao implements GenericDao <Devices, String> {
+public class DeviceDao implements GenericDao <Device, String> {
 
     private EntityManager em = EMFactory.getInstance();
 
     @Override
-    public String create(Devices newInstance) {
+    public String create(Device newInstance) {
         em.getTransaction().begin();
         em.persist(newInstance);
         em.getTransaction().commit();
@@ -26,12 +25,12 @@ public class DevicesDao implements GenericDao <Devices, String> {
     }
 
     @Override
-    public Devices read(String id) {
-        return em.find(Devices.class, id);
+    public Device read(String id) {
+        return em.find(Device.class, id);
     }
 
     @Override
-    public Devices update(Devices transientObject) {
+    public Device update(Device transientObject) {
 //        em.find(Devices.class, transientObject.getIdDevice());
         em.getTransaction().begin();
         em.merge(transientObject);
@@ -46,13 +45,13 @@ public class DevicesDao implements GenericDao <Devices, String> {
         em.getTransaction().commit();
     }
 
-    public List<Devices> getAll() {
-        TypedQuery<Devices> namedQuery = em.createNamedQuery("Devices.getAll", Devices.class);
+    public List<Device> getAll() {
+        TypedQuery<Device> namedQuery = em.createNamedQuery("Device.getAll", Device.class);
         return namedQuery.getResultList();
     }
 
     public Set<Group> getAllGroupsOfCurrentDevice(String deviceId) {
-        Devices obj = read(deviceId);
+        Device obj = read(deviceId);
         return obj.getGroups();
     }
 

@@ -13,8 +13,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "devices")
-@NamedQuery(name = "Devices.getAll", query = "SELECT c from Devices c")
-public class Devices {
+@NamedQuery(name = "Device.getAll", query = "SELECT d from Device d")
+public class Device {
 
     @Id
     @Column(name = "id_device")
@@ -35,9 +35,9 @@ public class Devices {
             inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")})
     private Set<Group> groups;
 
-    public Devices() {}
+    public Device() {}
 
-    public Devices(String idDevice, BigInteger fbProfile, String description) {
+    public Device(String idDevice, BigInteger fbProfile, String description) {
         this.idDevice = idDevice;
         this.fbProfile = fbProfile;
         this.description = description;

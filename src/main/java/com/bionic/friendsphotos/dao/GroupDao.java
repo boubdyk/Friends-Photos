@@ -1,10 +1,9 @@
 package com.bionic.friendsphotos.dao;
 
-import com.bionic.friendsphotos.entity.Devices;
+import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.Iterator;
 import java.util.List;
@@ -59,14 +58,14 @@ public class GroupDao implements GenericDao <Group, Long> {
         return em.find(Group.class, id).getName();
     }
 
-    public Set<Devices> getAllDevicesFromGroup(Long groupId) {
+    public Set<Device> getAllDevicesFromGroup(Long groupId) {
         Group obj = read(groupId);
         return obj.getDevices();
     }
 
     public void deleteDeviceFromGroup(Long groupId, String deviceId) {
-        Set<Devices> list = read(groupId).getDevices();
-        Iterator<Devices> iterator = list.iterator();
+        Set<Device> list = read(groupId).getDevices();
+        Iterator<Device> iterator = list.iterator();
         while (iterator.hasNext()) {
             if (iterator.next().getIdDevice().equals(deviceId)) {
                 iterator.remove();
@@ -75,8 +74,8 @@ public class GroupDao implements GenericDao <Group, Long> {
         read(groupId).setDevices(list);
     }
 
-    public void addDeviceToGroup(Long groupId, Devices obj) {
-        Set<Devices> list = read(groupId).getDevices();
+    public void addDeviceToGroup(Long groupId, Device obj) {
+        Set<Device> list = read(groupId).getDevices();
         list.add(obj);
     }
 
