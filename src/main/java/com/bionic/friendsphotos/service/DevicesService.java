@@ -36,4 +36,6 @@ public class DevicesService {
     public List<Devices> getAllDevices() {
         return devicesDao.getAll();
     }
+
+    public Devices updateDevice(Devices obj) { return devicesDao.update(obj);}
 }

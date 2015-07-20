@@ -41,6 +41,10 @@ public class Devices {
         this.description = description;
     }
 
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
     public String getIdDevice() {
         return idDevice;
     }
