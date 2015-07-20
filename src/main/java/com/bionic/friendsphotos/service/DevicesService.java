@@ -1,9 +1,11 @@
 package com.bionic.friendsphotos.service;
 
 import com.bionic.friendsphotos.dao.DevicesDao;
+import com.bionic.friendsphotos.dao.GroupDao;
 import com.bionic.friendsphotos.entity.Devices;
 import com.bionic.friendsphotos.entity.Group;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
  */
 public class DevicesService {
     DevicesDao devicesDao;
+    GroupDao groupDao;
 
     public DevicesService() {
         devicesDao  = new DevicesDao();
@@ -38,4 +41,14 @@ public class DevicesService {
     }
 
     public Devices updateDevice(Devices obj) { return devicesDao.update(obj);}
+
+    public void deleteGroupFromDevice(String deviceId, Long groupId) {
+            devicesDao.deleteGroupFromDevice(deviceId, groupId);
+    }
+
+    public void addGroupToDevice(String deviceId, Long groupId) {
+        groupDao = new GroupDao();
+        devicesDao.addGroupToDevice(deviceId, groupDao.read(groupId));
+    }
+
 }

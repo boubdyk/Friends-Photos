@@ -6,7 +6,9 @@ import com.bionic.friendsphotos.entity.Group;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by c265 on 17.07.2015.
@@ -30,10 +32,10 @@ public class DevicesDao implements GenericDao <Devices, String> {
 
     @Override
     public Devices update(Devices transientObject) {
-        em.find(Devices.class, transientObject.getIdDevice());
-//        em.getTransaction().begin();
+//        em.find(Devices.class, transientObject.getIdDevice());
+        em.getTransaction().begin();
         em.merge(transientObject);
-//        em.getTransaction().commit();
+        em.getTransaction().commit();
         return transientObject;
     }
 
@@ -49,8 +51,25 @@ public class DevicesDao implements GenericDao <Devices, String> {
         return namedQuery.getResultList();
     }
 
-    public List<Group> getAllGroupsOfCurrentDevice(String deviceId) {
+    public Set<Group> getAllGroupsOfCurrentDevice(String deviceId) {
         Devices obj = read(deviceId);
         return obj.getGroups();
+    }
+
+    public void deleteGroupFromDevice(String deviceId, Long groupId) {
+        Set<Group> list = read(deviceId).getGroups();
+        Iterator<Group> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getId().equals(groupId)) {
+                iterator.remove();
+            }
+        }
+        read(deviceId).setGroups(list);
+    }
+
+    public void addGroupToDevice(String deviceId, Group obj) {
+        Set<Group> list = read(deviceId).getGroups();
+        list.add(obj);
+        read(deviceId).setGroups(list);
     }
 }

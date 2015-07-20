@@ -4,9 +4,7 @@ import com.bionic.friendsphotos.service.DevicesService;
 import com.bionic.friendsphotos.service.GroupService;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by c265 on 07.07.2015.
@@ -38,37 +36,63 @@ public class BrowseData {
 
     public static void main(String[] args) {
 
-//        Devices dv = new Devices("pppppp", new BigInteger(String.valueOf(45454)), "Android");
-//        Devices dv1 = new Devices("erer", new BigInteger(String.valueOf(45454)), "Android");
-//        Devices dv2 = new Devices("ioioioi", new BigInteger(String.valueOf(45454)), "Android");
-
-//        devicesService.addNewDevice(dv);
-
-//        ArrayList<Devices> list = new ArrayList<Devices>();
+//        Group group = groupService.findById(40L);
+//        group.setIdCreator("pppppp");
+//        System.out.println(group);
+//        Devices dv = devicesService.findById("pppppp");
+//        Devices dv1 = devicesService.findById("erer");
+//        Devices dv2 = devicesService.findById("ioioioi");
+//        System.out.println(dv + "\n" + dv1 + "\n" + dv2);
+//        Set<Devices> list = group.getDevices();
 //        list.add(dv);
+//        list.add(dv1);
+//        list.add(dv2);
+//        group.setDevices(list);
+//        groupService.updateGroup(group);
+//
+//        System.out.println("All Devices : " + group);
+//        groupService.deleteDeviceFromGroup(40L, "erer");
+//        System.out.println("All Devices : " + group);
 
-//        Group group = new Group("RTRTRT", new Byte(String.valueOf(1)), "dfdffffff");
 
-//        group.setDevices(Arrays.asList(dv, dv1, dv2));
-//        groupService.createGroup(group);
-
-//        System.out.println("All Devices : " + groupService.getAllDevices(38L));
-
-
-        Devices dv = devicesService.findById("ioioioi");
-        System.out.println(dv);
-        Group g1 = groupService.findById(40L);
-        Group g2 = groupService.findById(41L);
-        Group g3 = groupService.findById(39L);
-        System.out.println(g1 + "\n" + g2 + "\n" + g3);
-        dv.setGroups(Arrays.asList(g1, g2, g3));
-        System.out.println(dv);
-        devicesService.updateDevice(dv);
+//        Devices dv = devicesService.findById("ioioioi");
+//        System.out.println(dv);
+//        Group g1 = groupService.findById(10L);
+//        Group g2 = groupService.findById(40L);
+//        Group g3 = groupService.findById(6L);
+//        System.out.println(g1 + "\n" + g2 + "\n" + g3);
+//        Set<Group> list = dv.getGroups();
+//        list.add(g1);
+//        list.add(g2);
+//        list.add(g3);
+//        dv.setGroups(list);
+//        System.out.println(dv);
+//        devicesService.updateDevice(dv);
+//
+//        devicesService.deleteGroupFromDevice("ioioioi", 6L);
+//        System.out.println(dv);
 
 
         browseTableGroup();
         browseTableDevices();
 
         System.out.println();
+
+        Devices d = devicesService.findById("pppppp");
+        Group g1 = groupService.findById(2L);
+        devicesService.addGroupToDevice(d.getIdDevice(), g1.getId());
+        System.out.println(d);
+
+        devicesService.deleteGroupFromDevice("pppppp", g1.getId());
+        System.out.println(d);
+
+
+
+        Group g2 = groupService.findById(3L);
+        System.out.println(g2);
+        groupService.addDeviceToGroup(g2.getId(), d.getIdDevice());
+        System.out.println(g2);
+        groupService.deleteDeviceFromGroup(g2.getId(), d.getIdDevice());
+        System.out.println(g2);
     }
 }

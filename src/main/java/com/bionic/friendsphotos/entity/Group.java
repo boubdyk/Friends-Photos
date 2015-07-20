@@ -2,7 +2,9 @@ package com.bionic.friendsphotos.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by c265 on 07.07.2015.
@@ -27,12 +29,15 @@ public class Group {
     @Column(name = "pass")
     private String password;
 
+    @Column(name = "id_creator")
+    private String idCreator;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "devices_in_groups",
             joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "device_id", referencedColumnName = "id_device")})
 //    @ManyToMany(mappedBy = "groups")
-    private List<Devices> devices;
+    private Set<Devices> devices;
 
     public Group() {
     }
@@ -82,17 +87,25 @@ public class Group {
         this.password = password;
     }
 
-    public List<Devices> getDevices() {
+    public String getIdCreator() {
+        return idCreator;
+    }
+
+    public void setIdCreator(String idCreator) {
+        this.idCreator = idCreator;
+    }
+
+    public Set<Devices> getDevices() {
         return devices;
     }
 
-    public void setDevices(List<Devices> devices) {
+    public void setDevices(Set<Devices> devices) {
         this.devices = devices;
     }
 
     @Override
     public String toString() {
-        List<String> devicesId = new ArrayList<>();
+        Set<String> devicesId = new HashSet<>();
         for (Devices d: getDevices()) {
             devicesId.add(d.getIdDevice());
         }
@@ -101,6 +114,7 @@ public class Group {
                 ", name='" + name + '\'' +
                 ", type=" + type +
                 ", password='" + password + '\'' +
+                ", idCreator='" + idCreator + '\'' +
                 ", devices='" + devicesId + '\'' +
                 '}';
     }
