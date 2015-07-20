@@ -6,6 +6,7 @@ import com.bionic.friendsphotos.entity.Group;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by c265 on 14.07.2015.
@@ -70,11 +71,11 @@ public class GroupService {
         return list;
     }
 
-//    public List<Devices> setDeviceToGroup(Devices d, Long id) {
-//        return groupDao.setDeviceToGroup(d, id);
-//    }
-
-    public List<Devices> getAllDevices(Long id) {
+    public Set<Devices> getAllDevices(Long id) {
         return groupDao.getAllDevicesFromGroup(id);
+    }
+
+    public void deleteDeviceFromGroup(Long groupId, String deviceId) {
+        groupDao.deleteDeviceFromGroup(groupId, deviceId);
     }
 }

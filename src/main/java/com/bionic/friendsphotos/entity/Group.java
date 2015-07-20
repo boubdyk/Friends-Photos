@@ -2,7 +2,9 @@ package com.bionic.friendsphotos.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by c265 on 07.07.2015.
@@ -32,7 +34,7 @@ public class Group {
             joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "device_id", referencedColumnName = "id_device")})
 //    @ManyToMany(mappedBy = "groups")
-    private List<Devices> devices;
+    private Set<Devices> devices;
 
     public Group() {
     }
@@ -82,17 +84,17 @@ public class Group {
         this.password = password;
     }
 
-    public List<Devices> getDevices() {
+    public Set<Devices> getDevices() {
         return devices;
     }
 
-    public void setDevices(List<Devices> devices) {
+    public void setDevices(Set<Devices> devices) {
         this.devices = devices;
     }
 
     @Override
     public String toString() {
-        List<String> devicesId = new ArrayList<>();
+        Set<String> devicesId = new HashSet<>();
         for (Devices d: getDevices()) {
             devicesId.add(d.getIdDevice());
         }

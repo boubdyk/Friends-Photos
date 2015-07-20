@@ -4,6 +4,7 @@ import com.bionic.friendsphotos.dao.DevicesDao;
 import com.bionic.friendsphotos.entity.Devices;
 import com.bionic.friendsphotos.entity.Group;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,4 +39,8 @@ public class DevicesService {
     }
 
     public Devices updateDevice(Devices obj) { return devicesDao.update(obj);}
+
+    public void deleteGroupFromDevice(String deviceId, Long groupId) {
+            devicesDao.deleteGroupFromDevice(deviceId, groupId);
+    }
 }
