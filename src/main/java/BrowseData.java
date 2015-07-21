@@ -1,8 +1,13 @@
 import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
+import com.bionic.friendsphotos.entity.Photo;
 import com.bionic.friendsphotos.service.DevicesService;
 import com.bionic.friendsphotos.service.GroupService;
+import com.bionic.friendsphotos.service.PhotoService;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -12,6 +17,7 @@ import java.util.*;
 public class BrowseData {
     static GroupService groupService = new GroupService();
     static DevicesService devicesService = new DevicesService();
+    static PhotoService photoService = new PhotoService();
 
     static void browseTableGroup() {
         System.out.println("\n");
@@ -33,65 +39,11 @@ public class BrowseData {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
 
-//        Group group = groupService.findById(40L);
-//        group.setIdCreator("pppppp");
-//        System.out.println(group);
-//        Devices dv = devicesService.findById("pppppp");
-//        Devices dv1 = devicesService.findById("erer");
-//        Devices dv2 = devicesService.findById("ioioioi");
-//        System.out.println(dv + "\n" + dv1 + "\n" + dv2);
-//        Set<Devices> list = group.getDevices();
-//        list.add(dv);
-//        list.add(dv1);
-//        list.add(dv2);
-//        group.setDevices(list);
-//        groupService.updateGroup(group);
-//
-//        System.out.println("All Devices : " + group);
-//        groupService.deleteDeviceFromGroup(40L, "erer");
-//        System.out.println("All Devices : " + group);
+        Photo photo = new Photo(10L , "aaa", "borsch2.png");
 
+        photoService.create(photo, new FileInputStream("D:\\borsch2.png"));
 
-//        Devices dv = devicesService.findById("ioioioi");
-//        System.out.println(dv);
-//        Group g1 = groupService.findById(10L);
-//        Group g2 = groupService.findById(40L);
-//        Group g3 = groupService.findById(6L);
-//        System.out.println(g1 + "\n" + g2 + "\n" + g3);
-//        Set<Group> list = dv.getGroups();
-//        list.add(g1);
-//        list.add(g2);
-//        list.add(g3);
-//        dv.setGroups(list);
-//        System.out.println(dv);
-//        devicesService.updateDevice(dv);
-//
-//        devicesService.deleteGroupFromDevice("ioioioi", 6L);
-//        System.out.println(dv);
-
-
-        browseTableGroup();
-        browseTableDevices();
-
-        System.out.println();
-
-        Device d = devicesService.findById("pppppp");
-        Group g1 = groupService.findById(2L);
-        devicesService.addGroupToDevice(d.getIdDevice(), g1.getId());
-        System.out.println(d);
-
-        devicesService.deleteGroupFromDevice("pppppp", g1.getId());
-        System.out.println(d);
-
-
-
-        Group g2 = groupService.findById(3L);
-        System.out.println(g2);
-        groupService.addDeviceToGroup(g2.getId(), d.getIdDevice());
-        System.out.println(g2);
-        groupService.deleteDeviceFromGroup(g2.getId(), d.getIdDevice());
-        System.out.println(g2);
     }
 }
