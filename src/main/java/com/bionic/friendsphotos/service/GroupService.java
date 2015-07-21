@@ -22,8 +22,8 @@ public class GroupService {
     }
 
 
-    public List<Group> getAllGroups() {
-        List<Group> groups = groupDao.getAll();
+    public Set<Group> getAllGroups() {
+        Set<Group> groups = groupDao.getAll();
         return groups;
     }
 

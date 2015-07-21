@@ -5,6 +5,7 @@ import com.bionic.friendsphotos.entity.Group;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +20,7 @@ public class GroupDao implements GenericDao <Group, Long> {
 
     public GroupDao() {
     }
+
 
     @Override
     public Long create(Group newInstance) {
@@ -36,8 +38,9 @@ public class GroupDao implements GenericDao <Group, Long> {
 
     @Override
     public Group update(Group transientObject) {
-        em.find(Group.class, transientObject.getId());
+        em.getTransaction().begin();
         em.merge(transientObject);
+        em.getTransaction().commit();
         return transientObject;
     }
 
@@ -49,9 +52,9 @@ public class GroupDao implements GenericDao <Group, Long> {
         em.getTransaction().commit();
     }
 
-    public List<Group> getAll() {
+    public Set<Group> getAll() {
         TypedQuery<Group> namedQuery = em.createNamedQuery("Group.getAll", Group.class);
-        return namedQuery.getResultList();
+        return new HashSet<>(namedQuery.getResultList());
     }
 
     public String getNameById(Long id) {

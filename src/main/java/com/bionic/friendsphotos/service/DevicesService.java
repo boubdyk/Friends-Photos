@@ -6,7 +6,9 @@ import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by c265 on 17.07.2015.
@@ -19,14 +21,6 @@ public class DevicesService {
         devicesDao  = new DeviceDao();
     }
 
-    public List<Long> getIdOfAllGroupsInCurrentDevice(String devicesId) {
-        List<Long> list = new ArrayList<>();
-        for (Group g: devicesDao.getAllGroupsOfCurrentDevice(devicesId)) {
-            list.add(g.getId());
-        }
-        return list;
-    }
-
     public void addNew(Device obj) {
         devicesDao.create(obj);
     }
@@ -35,11 +29,23 @@ public class DevicesService {
         return devicesDao.read(id);
     }
 
-    public List<Device> getAll() {
-        return devicesDao.getAll();
+    public Device updateDevice(Device obj) { return devicesDao.update(obj);}
+
+    public void deleteDevice(String idDevice) {
+        devicesDao.delete(idDevice);
     }
 
-    public Device updateDevice(Device obj) { return devicesDao.update(obj);}
+    public Set<Long> getIdOfAllGroupsInCurrentDevice(String devicesId) {
+        Set<Long> list = new HashSet<>();
+        for (Group g: devicesDao.getAllGroupsOfCurrentDevice(devicesId)) {
+            list.add(g.getId());
+        }
+        return list;
+    }
+
+    public Set<Device> getAll() {
+        return devicesDao.getAll();
+    }
 
     public void deleteGroupFromDevice(String deviceId, Long groupId) {
             devicesDao.deleteGroupFromDevice(deviceId, groupId);
