@@ -12,8 +12,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "\"groups\"")
-@NamedQuery(name = "Group.getAll", query = "SELECT g from Group g")
-public class Group {
+@NamedQuery(name = "Group.getAll", query = "SELECT g from Group g order by g.id")
+public class Group implements Comparable<Group>{
 
     @Id
     @Column(name = "id")
@@ -37,7 +37,7 @@ public class Group {
             joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "device_id", referencedColumnName = "id_device")})
 //    @ManyToMany(mappedBy = "groups")
-    private Set<Device> devices;
+    private List<Device> devices;
 
     public Group() {
     }
@@ -95,11 +95,11 @@ public class Group {
         this.idCreator = idCreator;
     }
 
-    public Set<Device> getDevices() {
+    public List<Device> getDevices() {
         return devices;
     }
 
-    public void setDevices(Set<Device> devices) {
+    public void setDevices(List<Device> devices) {
         this.devices = devices;
     }
 
@@ -117,5 +117,38 @@ public class Group {
                 ", idCreator='" + idCreator + '\'' +
                 ", devices='" + devicesId + '\'' +
                 '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Group group = (Group) o;
+
+        if (!id.equals(group.id)) return false;
+        if (name != null ? !name.equals(group.name) : group.name != null) return false;
+        if (type != null ? !type.equals(group.type) : group.type != null) return false;
+        if (password != null ? !password.equals(group.password) : group.password != null) return false;
+        if (idCreator != null ? !idCreator.equals(group.idCreator) : group.idCreator != null) return false;
+        return !(devices != null ? !devices.equals(group.devices) : group.devices != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (idCreator != null ? idCreator.hashCode() : 0);
+        result = 31 * result + (devices != null ? devices.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public int compareTo(Group obj) {
+        return obj.getId().compareTo(this.getId());
     }
 }

@@ -15,7 +15,7 @@ public class BrowseData {
 
     static void browseTableGroup() {
         System.out.println("\n");
-        Set<Group> list = groupService.getAllGroups();
+        List<Group> list = groupService.getAllGroups();
         for (Group groups: list) {
             System.out.format("%-5d %-25s %-3d %-20s %s", groups.getId(), groups.getName(),
                     groups.getType(), groups.getPassword(), groups.getIdCreator() + "\n");
@@ -35,14 +35,14 @@ public class BrowseData {
 
     public static void main(String[] args) {
 
-        Group group = groupService.findById(40L);
+        Group group = groupService.findById(7L);
 //        group.setIdCreator("pppppp");
         System.out.println(group);
         Device dv = devicesService.findById("pppppp");
         Device dv1 = devicesService.findById("erer");
         Device dv2 = devicesService.findById("ioioioi");
         System.out.println(dv + "\n" + dv1 + "\n" + dv2);
-        Set<Device> list = group.getDevices();
+        List<Device> list = group.getDevices();
         list.add(dv);
         list.add(dv1);
         list.add(dv2);

@@ -35,15 +35,15 @@ public class DevicesService {
         devicesDao.delete(idDevice);
     }
 
-    public Set<Long> getIdOfAllGroupsInCurrentDevice(String devicesId) {
-        Set<Long> list = new HashSet<>();
+    public List<Long> getIdOfAllGroupsInCurrentDevice(String devicesId) {
+        List<Long> list = new ArrayList<>();
         for (Group g: devicesDao.getAllGroupsOfCurrentDevice(devicesId)) {
             list.add(g.getId());
         }
         return list;
     }
 
-    public Set<Device> getAll() {
+    public List<Device> getAll() {
         return devicesDao.getAll();
     }
 

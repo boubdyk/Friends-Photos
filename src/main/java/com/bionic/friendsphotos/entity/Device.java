@@ -33,7 +33,7 @@ public class Device {
     @JoinTable(name = "devices_in_groups",
             joinColumns = {@JoinColumn(name = "device_id", referencedColumnName = "id_device")},
             inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")})
-    private Set<Group> groups;
+    private List<Group> groups;
 
     public Device() {}
 
@@ -43,7 +43,7 @@ public class Device {
         this.description = description;
     }
 
-    public void setGroups(Set<Group> groups) {
+    public void setGroups(List<Group> groups) {
         this.groups = groups;
     }
 
@@ -71,7 +71,7 @@ public class Device {
         this.name = name;
     }
 
-    public Set<Group> getGroups() {
+    public List<Group> getGroups() {
         return groups;
     }
 

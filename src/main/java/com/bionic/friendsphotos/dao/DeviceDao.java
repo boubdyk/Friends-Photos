@@ -27,6 +27,7 @@ public class DeviceDao implements GenericDao <Device, String> {
 
     @Override
     public Device read(String id) {
+        em.getTransaction().begin();
         return em.find(Device.class, id);
     }
 
@@ -46,18 +47,18 @@ public class DeviceDao implements GenericDao <Device, String> {
         em.getTransaction().commit();
     }
 
-    public Set<Device> getAll() {
+    public List<Device> getAll() {
         TypedQuery<Device> namedQuery = em.createNamedQuery("Device.getAll", Device.class);
-        return new HashSet<>(namedQuery.getResultList());
+        return namedQuery.getResultList();
     }
 
-    public Set<Group> getAllGroupsOfCurrentDevice(String deviceId) {
+    public List<Group> getAllGroupsOfCurrentDevice(String deviceId) {
         Device obj = read(deviceId);
         return obj.getGroups();
     }
 
     public void deleteGroupFromDevice(String deviceId, Long groupId) {
-        Set<Group> list = read(deviceId).getGroups();
+        List<Group> list = read(deviceId).getGroups();
         Iterator<Group> iterator = list.iterator();
         while (iterator.hasNext()) {
             if (iterator.next().getId().equals(groupId)) {
@@ -68,7 +69,7 @@ public class DeviceDao implements GenericDao <Device, String> {
     }
 
     public void addGroupToDevice(String deviceId, Group obj) {
-        Set<Group> list = read(deviceId).getGroups();
+        List<Group> list = read(deviceId).getGroups();
         list.add(obj);
         read(deviceId).setGroups(list);
     }

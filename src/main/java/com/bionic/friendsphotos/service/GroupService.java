@@ -5,9 +5,7 @@ import com.bionic.friendsphotos.dao.GroupDao;
 import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by c265 on 14.07.2015.
@@ -22,8 +20,8 @@ public class GroupService {
     }
 
 
-    public Set<Group> getAllGroups() {
-        Set<Group> groups = groupDao.getAll();
+    public List<Group> getAllGroups() {
+        List<Group> groups = groupDao.getAll();
         return groups;
     }
 
@@ -73,7 +71,7 @@ public class GroupService {
         return list;
     }
 
-    public Set<Device> getAllDevices(Long id) {
+    public List<Device> getAllDevices(Long id) {
         return groupDao.getAllDevicesFromGroup(id);
     }
 
