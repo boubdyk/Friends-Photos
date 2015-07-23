@@ -3,6 +3,7 @@ import com.bionic.friendsphotos.entity.Group;
 import com.bionic.friendsphotos.service.DevicesService;
 import com.bionic.friendsphotos.service.GroupService;
 
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -26,33 +27,34 @@ public class BrowseData {
     static void browseTableDevices() {
         System.out.println();
         for (Device devices: devicesService.getAll()) {
-            System.out.format("%-30s %-20s %-20d %-20s %s", devices.getIdDevice(),
+            System.out.format("%-30s %-20s %-20d %-20s %-5d %s", devices.getIdDevice(),
                     devices.getDescription(),
                     devices.getFbProfile(),
-                    devices.getName(), "\n");
+                    devices.getName(),
+                    devices.getCurrentGroup(), "\n");
         }
     }
 
     public static void main(String[] args) {
 
-        Group group = groupService.findById(9L);
-//        group.setIdCreator("pppppp");
-        System.out.println(group);
-        Device dv = devicesService.findById("pppppp");
-        Device dv1 = devicesService.findById("erer");
-        Device dv2 = devicesService.findById("ioioioi");
-        System.out.println(dv + "\n" + dv1 + "\n" + dv2);
-        List<Device> list = group.getDevices();
-        list.add(dv);
-        list.add(dv1);
-        list.add(dv2);
-        group.setDevices(list);
-        group.setIdCreator("ccc");
-        groupService.updateGroup(group);
-
-        System.out.println("All Devices : " + group);
-        groupService.deleteDeviceFromGroup(40L, "erer");
-        System.out.println("All Devices : " + group);
+//        Group group = groupService.findById(9L);
+////        group.setIdCreator("pppppp");
+//        System.out.println(group);
+//        Device dv = devicesService.findById("pppppp");
+//        Device dv1 = devicesService.findById("erer");
+//        Device dv2 = devicesService.findById("ioioioi");
+//        System.out.println(dv + "\n" + dv1 + "\n" + dv2);
+//        List<Device> list = group.getDevices();
+//        list.add(dv);
+//        list.add(dv1);
+//        list.add(dv2);
+//        group.setDevices(list);
+//        group.setIdCreator("ccc");
+//        groupService.updateGroup(group);
+//
+//        System.out.println("All Devices : " + group);
+//        groupService.deleteDeviceFromGroup(40L, "erer");
+//        System.out.println("All Devices : " + group);
 
 
 //        Device dv = devicesService.findById("ioioioi");
@@ -73,10 +75,11 @@ public class BrowseData {
 //        System.out.println(dv);
 
 
-        browseTableGroup();
+//        browseTableGroup();
         browseTableDevices();
 
-        System.out.println();
+
+
 
 //        Device d = devicesService.findById("pppppp");
 //        Group g1 = groupService.findById(2L);

@@ -29,6 +29,9 @@ public class Device {
     @Column(name = "description")
     String description;
 
+    @Column(name = "current_group")
+    Long currentGroup;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "devices_in_groups",
             joinColumns = {@JoinColumn(name = "device_id", referencedColumnName = "id_device")},
@@ -37,10 +40,10 @@ public class Device {
 
     public Device() {}
 
-    public Device(String idDevice, BigInteger fbProfile, String description) {
+    public Device(String idDevice, BigInteger fbProfile, String name) {
         this.idDevice = idDevice;
         this.fbProfile = fbProfile;
-        this.description = description;
+        this.name = name;
     }
 
     public void setGroups(List<Group> groups) {
@@ -83,6 +86,14 @@ public class Device {
         this.description = description;
     }
 
+    public Long getCurrentGroup() {
+        return currentGroup;
+    }
+
+    public void setCurrentGroup(Long currentGroup) {
+        this.currentGroup = currentGroup;
+    }
+
     @Override
     public String toString() {
         Set<Long> groupId = new HashSet<>();
@@ -94,6 +105,7 @@ public class Device {
                 ", fbProfile=" + fbProfile +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", currentGroup='" + currentGroup + '\'' +
                 ", groups=" + groupId +
                 '}';
     }
