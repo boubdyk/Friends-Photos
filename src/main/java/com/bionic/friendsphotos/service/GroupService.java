@@ -4,6 +4,7 @@ import com.bionic.friendsphotos.dao.DeviceDao;
 import com.bionic.friendsphotos.dao.GroupDao;
 import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.*;
 
@@ -25,9 +26,12 @@ public class GroupService {
         return groups;
     }
 
-    public Long createGroup(Group obj) {
+    public Long createGroup(Group group) {
         try {
-            return groupDao.create(obj);
+            if (StringUtils.isEmpty(group.getName())) {
+                return null;
+            }
+            return groupDao.create(group);
         } catch (IllegalStateException ex) {
             System.out.println("Cannot create group with null fields!");
             return null;

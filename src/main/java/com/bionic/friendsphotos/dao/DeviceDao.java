@@ -19,32 +19,32 @@ public class DeviceDao implements GenericDao <Device, String> {
 
     @Override
     public String create(Device newInstance) {
-        em.getTransaction().begin();
+       // em.getTransaction().begin();
         em.persist(newInstance);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
         return newInstance.getIdDevice();
     }
 
     @Override
     public Device read(String id) {
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         return em.find(Device.class, id);
     }
 
     @Override
     public Device update(Device transientObject) {
 //        em.find(Devices.class, transientObject.getIdDevice());
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         em.merge(transientObject);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
         return transientObject;
     }
 
     @Override
     public void delete(String idDevice) {
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         em.remove(read(idDevice));
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
     }
 
     public List<Device> getAll() {

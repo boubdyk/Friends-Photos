@@ -21,33 +21,33 @@ public class GroupDao implements GenericDao <Group, Long> {
 
     @Override
     public Long create(Group newInstance) {
-        em.getTransaction().begin();
+       // em.getTransaction().begin();
         em.persist(newInstance);
-        em.getTransaction().commit();
+       // em.getTransaction().commit();
         return newInstance.getId();
     }
 
 
     @Override
     public Group read(Long id) {
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         return em.find(Group.class, id);
     }
 
     @Override
     public Group update(Group transientObject) {
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         em.merge(transientObject);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
         return transientObject;
     }
 
     @Override
     public void delete(Long id) {
         Group obj = read(id);
-        em.getTransaction().begin();
+       // em.getTransaction().begin();
         em.remove(obj);
-        em.getTransaction().commit();
+       // em.getTransaction().commit();
     }
 
     public List<Group> getAll() {

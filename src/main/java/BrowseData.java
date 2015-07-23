@@ -35,7 +35,7 @@ public class BrowseData {
 
     public static void main(String[] args) {
 
-        Group group = groupService.findById(7L);
+        Group group = groupService.findById(9L);
 //        group.setIdCreator("pppppp");
         System.out.println(group);
         Device dv = devicesService.findById("pppppp");
