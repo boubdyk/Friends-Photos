@@ -4,11 +4,14 @@ import com.bionic.friendsphotos.entity.Photo;
 
 import javax.persistence.EntityManager;
 import java.io.*;
+import java.nio.file.*;
 
 /**
  * Created by c267 on 21.07.2015.
  */
 public class PhotoDao implements GenericDao<Photo, Long> {
+
+    private static final String DIRECTORY = "E:\\FriendsPhotosBase\\";
 
     private EntityManager em = EMFactory.getInstance();
 
@@ -17,14 +20,23 @@ public class PhotoDao implements GenericDao<Photo, Long> {
 
 
     public void savePhoto(Photo photo, InputStream uploadedInputStream) throws IOException {
+        int counter = 1;
 
-/*        String dir = "D:\\FriendsPhotosBase\\"
-                + photo.getGroupId() + "\\";*/
+        File dir = new File(DIRECTORY + photo.getGroupId() + "\\");
+        if (!dir.exists()) { dir.mkdirs(); }
+        File file = new File(dir, photo.getName());
+        System.out.println(file.getAbsolutePath());
+        while (file.exists()){
+            String [] separatedName = photo.getName().split("\\.");
+            System.out.println(separatedName[0] + " sep " + separatedName[1]);
+            separatedName[0] += "("+ (counter++) + ")";
+            String newPhotoName = separatedName[0] + "." + separatedName[1];
+            photo.setName(newPhotoName);
 
-        File dir = new File("D:\\FriendsPhotosBase\\"
-                + photo.getGroupId() + "\\");
-        dir.mkdirs();
-        OutputStream out = new FileOutputStream(dir + "\\" + photo.getName());
+            file = new File(DIRECTORY + + photo.getGroupId() + "\\" + newPhotoName);
+        }
+
+        OutputStream out = new FileOutputStream(file);
 
         int read = 0;
         byte[] bytes = new byte[1024];
@@ -32,11 +44,13 @@ public class PhotoDao implements GenericDao<Photo, Long> {
         while ((read = uploadedInputStream.read(bytes)) != -1) {
             out.write(bytes, 0, read);
         }
+
         out.flush();
         out.close();
 
-//        create(photo);
+        
     }
+
 
     @Override
     public Long create(Photo newInstance) {

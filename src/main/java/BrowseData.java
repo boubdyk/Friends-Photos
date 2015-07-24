@@ -41,9 +41,10 @@ public class BrowseData {
 
     public static void main(String[] args) throws IOException{
 
-        Photo photo = new Photo(10L , "aaa", "borsch2.png");
+        Photo photo = new Photo(8L , "aaa", "borsch.png");
 
-        photoService.create(photo, new FileInputStream("D:\\borsch2.png"));
+        photoService.savePhoto(photo, new FileInputStream("E:\\test.png"));
+        //photoService.create(photo);
 
     }
 }

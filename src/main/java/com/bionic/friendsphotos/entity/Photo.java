@@ -56,6 +56,19 @@ public class Photo {
         return name;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
 
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
