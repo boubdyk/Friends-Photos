@@ -3,7 +3,7 @@ package com.bionic.friendsphotos.dao;
 import java.io.Serializable;
 
 /**
- * Created by boubdyk on 15.07.2015.
+ * Created by Bogdan Sliptsov on 15.07.2015.
  */
 public interface GenericDao <T, PK extends Serializable> {
 

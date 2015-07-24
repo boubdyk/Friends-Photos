@@ -8,7 +8,7 @@ import javax.persistence.TypedQuery;
 import java.util.*;
 
 /**
- * Created by c265 on 17.07.2015.
+ * Created by Bogdan Sliptsov on 17.07.2015.
  */
 public class DeviceDao implements GenericDao <Device, String> {
 
@@ -30,7 +30,6 @@ public class DeviceDao implements GenericDao <Device, String> {
 
     @Override
     public Device update(Device transientObject) {
-//        em.find(Devices.class, transientObject.getIdDevice());
         em.getTransaction().begin();
         em.merge(transientObject);
         em.getTransaction().commit();
@@ -65,34 +64,13 @@ public class DeviceDao implements GenericDao <Device, String> {
         read(deviceId).setGroups(list);
     }
 
-    public void addGroupToDevice(String deviceId, Group obj) {
+    public void addGroupToDevice(String deviceId, Group group) {
         List<Group> list = read(deviceId).getGroups();
-        list.add(obj);
+        list.add(group);
         read(deviceId).setGroups(list);
     }
 
-    /**
-     * User-story
-     *
-     * Front-end -> Back-end:
-     * Input: deviceId
-     *
-     * Back-end -> Front-end:
-     * Output: returns Map<String, Object> {fieldName -> value of this field};
-     ********************************************************************************************
-     * Returns Map<String, Object>, where Key means fieldName and Value means value of this field
-     *
-     * @param deviceId identifier of requested device
-     * @return TreeMap of currentGroup and userName
-     */
 
-    public Map<String, Object> getCurrentGroupAndUserName(String deviceId) {
-        Map<String, Object> map = new TreeMap<>();
-        Device device = read(deviceId);
-        map.put("currentGroup", device.getCurrentGroup());
-        map.put("userName", device.getName());
-        return map;
-    }
 
     /**
      * Loging by Facebook
@@ -108,8 +86,5 @@ public class DeviceDao implements GenericDao <Device, String> {
      * @param device device to update
      */
 
-    public boolean loginByFacebook(Device device) {
-        update(device);
-        return true;
-    }
+
 }

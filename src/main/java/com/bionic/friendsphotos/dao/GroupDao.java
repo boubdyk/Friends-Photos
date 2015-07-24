@@ -8,7 +8,7 @@ import javax.persistence.TypedQuery;
 import java.util.*;
 
 /**
- * Created by c265 on 15.07.2015.
+ * Created by Bogdan Sliptsov on 15.07.2015.
  */
 
 public class GroupDao implements GenericDao <Group, Long> {
@@ -21,9 +21,9 @@ public class GroupDao implements GenericDao <Group, Long> {
 
     @Override
     public Long create(Group newInstance) {
-       // em.getTransaction().begin();
+        em.getTransaction().begin();
         em.persist(newInstance);
-       // em.getTransaction().commit();
+        em.getTransaction().commit();
         return newInstance.getId();
     }
 
@@ -35,11 +35,11 @@ public class GroupDao implements GenericDao <Group, Long> {
     }
 
     @Override
-    public Group update(Group transientObject) {
-//        em.getTransaction().begin();
-        em.merge(transientObject);
-//        em.getTransaction().commit();
-        return transientObject;
+    public Group update(Group group) {
+        em.getTransaction().begin();
+        em.merge(group);
+        em.getTransaction().commit();
+        return group;
     }
 
     @Override
