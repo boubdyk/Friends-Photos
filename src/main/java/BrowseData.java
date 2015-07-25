@@ -22,7 +22,7 @@ public class BrowseData {
     static void browseTableGroup() {
         System.out.println("\n");
         List<Group> list = groupService.getAllGroups();
-        for (Group groups: list) {
+        for (Group groups : list) {
             System.out.format("%-5d %-25s %-3d %-20s %s", groups.getId(), groups.getName(),
                     groups.getType(), groups.getPassword(), "\n");
         }
@@ -31,7 +31,7 @@ public class BrowseData {
 
     static void browseTableDevices() {
         System.out.println();
-        for (Device devices: devicesService.getAll()) {
+        for (Device devices : devicesService.getAll()) {
             System.out.format("%-30s %-20s %-20d %-20s %s", devices.getIdDevice(),
                     devices.getDescription(),
                     devices.getFbProfile(),
@@ -39,12 +39,14 @@ public class BrowseData {
         }
     }
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
 
-        Photo photo = new Photo(8L , "aaa", "borsch.png");
+        Photo photo = new Photo(9L , "aaa", "photo.png");
 
-        photoService.savePhoto(photo, new FileInputStream("E:\\test.png"));
+        //photoService.savePhoto(photo, new FileInputStream("E:\\test.png"));
         //photoService.create(photo);
+
+        System.out.println(photoService.getPhoto(photo).toString());
 
     }
 }

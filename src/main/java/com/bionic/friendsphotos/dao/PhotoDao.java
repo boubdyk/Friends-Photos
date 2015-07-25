@@ -19,21 +19,26 @@ public class PhotoDao implements GenericDao<Photo, Long> {
     }
 
 
-    public void savePhoto(Photo photo, InputStream uploadedInputStream) throws IOException {
+    public Photo savePhoto(Photo photo, InputStream uploadedInputStream) throws IOException {
         int counter = 1;
 
         File dir = new File(DIRECTORY + photo.getGroupId() + "\\");
         if (!dir.exists()) { dir.mkdirs(); }
         File file = new File(dir, photo.getName());
-        System.out.println(file.getAbsolutePath());
         while (file.exists()){
+            String newPhotoName;
+
             String [] separatedName = photo.getName().split("\\.");
-            System.out.println(separatedName[0] + " sep " + separatedName[1]);
-            separatedName[0] += "("+ (counter++) + ")";
-            String newPhotoName = separatedName[0] + "." + separatedName[1];
+            if (separatedName[0].contains("(")) {
+                String [] separatedNameWithCounter = separatedName[0].split("\\(");
+                newPhotoName = separatedNameWithCounter[0] + "(" + (counter++) + ")." + separatedName[1];
+            } else {
+                separatedName[0] += "(" + (counter++) + ")";
+                newPhotoName = separatedName[0] + "." + separatedName[1];
+            }
             photo.setName(newPhotoName);
 
-            file = new File(DIRECTORY + + photo.getGroupId() + "\\" + newPhotoName);
+            file = new File(DIRECTORY + photo.getGroupId() + "\\" + newPhotoName);
         }
 
         OutputStream out = new FileOutputStream(file);
@@ -45,12 +50,16 @@ public class PhotoDao implements GenericDao<Photo, Long> {
             out.write(bytes, 0, read);
         }
 
+        // todo: if ecxeption ?
         out.flush();
         out.close();
 
-        
+        return photo;
     }
 
+    public OutputStream getPhoto(Photo photo) throws IOException{
+        return new FileOutputStream(DIRECTORY + photo.getGroupId() + "\\" + photo.getName());
+    }
 
     @Override
     public Long create(Photo newInstance) {

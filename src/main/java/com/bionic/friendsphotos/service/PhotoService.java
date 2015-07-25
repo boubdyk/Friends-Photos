@@ -10,6 +10,7 @@ import javax.imageio.stream.ImageInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Iterator;
 import org.w3c.dom.*;
 /**
@@ -30,12 +31,23 @@ public class PhotoService {
 
 
         try {
-            photoDao.savePhoto(photo, uploadedInputStream);
+            photo = photoDao.savePhoto(photo, uploadedInputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
+        photoDao.create(photo);
+    }
+
+    public OutputStream getPhoto (Photo photo) {
+        OutputStream out = null;
+        try {
+            out = photoDao.getPhoto(photo);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //photoDao.create(photo);
+        return out;
     }
 
 }
