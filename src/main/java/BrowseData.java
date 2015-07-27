@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+
 import java.util.*;
 
 /**
@@ -49,11 +50,6 @@ public class BrowseData {
     public static void main(String[] args) throws IOException {
 
 
-        /*Photo photo = new Photo(3L , "aaa", "photo.2015.(mysuperphoto).png");
-
-        photoService.savePhoto(photo, new FileInputStream("D:\\qwe.png"));
-
-        System.out.println(photoService.getPhoto(photo).toString());*/
 
         browseTableGroup();
         browseTableDevices();
@@ -62,12 +58,19 @@ public class BrowseData {
         System.out.println(devicesService.findById("bbb"));
         System.out.println(groupService.findById(40L));
 
-        System.out.println(devicesService.removeMembersFromCurrentGroup("bbb", "erer"));
+        //System.out.println(devicesService.removeMembersFromCurrentGroup("bbb", "erer"));
 
         System.out.println(devicesService.findById("bbb"));
         System.out.println(groupService.findById(40L));
         System.out.println(devicesService.findById("erer"));
 
+
+
+       /* Photo photo = new Photo(3L , "aaa", "photo.2015.(mysuperphoto).png");
+
+        photoService.savePhoto(photo, new FileInputStream("D:\\qwe.png"));
+
+        System.out.println(photoService.getPhoto(photo).toString());*/
 
     }
 }
