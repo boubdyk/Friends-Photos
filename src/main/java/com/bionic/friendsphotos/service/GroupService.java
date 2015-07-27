@@ -5,21 +5,30 @@ import com.bionic.friendsphotos.dao.GroupDao;
 import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.math.BigInteger;
 import java.util.*;
 
 /**
  * Created by Bogdan Sliptsov on 14.07.2015.
  */
+
+@Named
+@Transactional
 public class GroupService {
 
-    private static GroupDao groupDao;
-    private static DeviceDao devicesDao;
+    @Inject
+    private GroupDao groupDao;
+
+    @Inject
+    private DeviceDao devicesDao;
 
     public GroupService() {
-        groupDao = new GroupDao();
-        devicesDao = new DeviceDao();
+//        groupDao = new GroupDao();
+//        devicesDao = new DeviceDao();
     }
 
 

@@ -2,23 +2,28 @@ package com.bionic.friendsphotos.dao;
 
 import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.*;
 
 /**
  * Created by Bogdan Sliptsov on 17.07.2015.
  */
+
+@Repository
 public class DeviceDao implements GenericDao <Device, String> {
 
-    private EntityManager em = EMFactory.getInstance();
+    @PersistenceContext
+    private EntityManager em; /* = EMFactory.getInstance();*/
 
     @Override
     public String create(Device newInstance) {
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         em.persist(newInstance);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
         return newInstance.getIdDevice();
     }
 
@@ -30,9 +35,9 @@ public class DeviceDao implements GenericDao <Device, String> {
 
     @Override
     public Device update(Device transientObject) {
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         em.merge(transientObject);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
         return transientObject;
     }
 
@@ -69,22 +74,4 @@ public class DeviceDao implements GenericDao <Device, String> {
         list.add(group);
         read(deviceId).setGroups(list);
     }
-
-
-
-    /**
-     * Loging by Facebook
-     *
-     * Front-end -> Back-end
-     * Input: deviceId, fbProfile, userName
-     *
-     * Back-end -> Front-end
-     * Output: returns boolean: true/false
-     * ***************************************************************************************
-     * Returns boolean value true if data was put to DB, false if data wasn't put to DB
-     *
-     * @param device device to update
-     */
-
-
 }

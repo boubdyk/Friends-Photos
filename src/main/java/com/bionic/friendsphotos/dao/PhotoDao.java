@@ -1,19 +1,24 @@
 package com.bionic.friendsphotos.dao;
 
 import com.bionic.friendsphotos.entity.Photo;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.*;
 import java.nio.file.*;
 
 /**
  * Created by c267 on 21.07.2015.
  */
+
+@Repository
 public class PhotoDao implements GenericDao<Photo, Long> {
 
     private static final String DIRECTORY = "D:\\FriendsPhotosBase\\";
 
-    private EntityManager em = EMFactory.getInstance();
+    @PersistenceContext
+    private EntityManager em; /* = EMFactory.getInstance();*/
 
     public PhotoDao() {
     }
@@ -75,9 +80,9 @@ public class PhotoDao implements GenericDao<Photo, Long> {
     @Override
     public Long create(Photo newInstance) {
 
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         em.persist(newInstance);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
         return newInstance.getId();
     }
 
