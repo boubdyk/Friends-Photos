@@ -5,12 +5,10 @@ import com.bionic.friendsphotos.entity.Group;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
- * Created by c265 on 15.07.2015.
+ * Created by Bogdan Sliptsov on 15.07.2015.
  */
 
 public class GroupDao implements GenericDao <Group, Long> {
@@ -19,6 +17,7 @@ public class GroupDao implements GenericDao <Group, Long> {
 
     public GroupDao() {
     }
+
 
     @Override
     public Long create(Group newInstance) {
@@ -31,22 +30,24 @@ public class GroupDao implements GenericDao <Group, Long> {
 
     @Override
     public Group read(Long id) {
+//        em.getTransaction().begin();
         return em.find(Group.class, id);
     }
 
     @Override
-    public Group update(Group transientObject) {
-        em.find(Group.class, transientObject.getId());
-        em.merge(transientObject);
-        return transientObject;
+    public Group update(Group group) {
+        em.getTransaction().begin();
+        em.merge(group);
+        em.getTransaction().commit();
+        return group;
     }
 
     @Override
     public void delete(Long id) {
         Group obj = read(id);
-        em.getTransaction().begin();
+       // em.getTransaction().begin();
         em.remove(obj);
-        em.getTransaction().commit();
+       // em.getTransaction().commit();
     }
 
     public List<Group> getAll() {
@@ -58,13 +59,13 @@ public class GroupDao implements GenericDao <Group, Long> {
         return em.find(Group.class, id).getName();
     }
 
-    public Set<Device> getAllDevicesFromGroup(Long groupId) {
+    public List<Device> getAllDevicesFromGroup(Long groupId) {
         Group obj = read(groupId);
         return obj.getDevices();
     }
 
     public void deleteDeviceFromGroup(Long groupId, String deviceId) {
-        Set<Device> list = read(groupId).getDevices();
+        List<Device> list = read(groupId).getDevices();
         Iterator<Device> iterator = list.iterator();
         while (iterator.hasNext()) {
             if (iterator.next().getIdDevice().equals(deviceId)) {
@@ -75,7 +76,7 @@ public class GroupDao implements GenericDao <Group, Long> {
     }
 
     public void addDeviceToGroup(Long groupId, Device obj) {
-        Set<Device> list = read(groupId).getDevices();
+        List<Device> list = read(groupId).getDevices();
         list.add(obj);
     }
 
