@@ -5,12 +5,10 @@ import com.bionic.friendsphotos.entity.Group;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
- * Created by c265 on 17.07.2015.
+ * Created by Bogdan Sliptsov on 17.07.2015.
  */
 public class DeviceDao implements GenericDao <Device, String> {
 
@@ -26,12 +24,12 @@ public class DeviceDao implements GenericDao <Device, String> {
 
     @Override
     public Device read(String id) {
+//        em.getTransaction().begin();
         return em.find(Device.class, id);
     }
 
     @Override
     public Device update(Device transientObject) {
-//        em.find(Devices.class, transientObject.getIdDevice());
         em.getTransaction().begin();
         em.merge(transientObject);
         em.getTransaction().commit();
@@ -39,10 +37,10 @@ public class DeviceDao implements GenericDao <Device, String> {
     }
 
     @Override
-    public void delete(String persistentObject) {
-        em.getTransaction().begin();
-        em.remove(persistentObject);
-        em.getTransaction().commit();
+    public void delete(String idDevice) {
+//        em.getTransaction().begin();
+        em.remove(read(idDevice));
+//        em.getTransaction().commit();
     }
 
     public List<Device> getAll() {
@@ -50,13 +48,13 @@ public class DeviceDao implements GenericDao <Device, String> {
         return namedQuery.getResultList();
     }
 
-    public Set<Group> getAllGroupsOfCurrentDevice(String deviceId) {
+    public List<Group> getAllGroupsOfCurrentDevice(String deviceId) {
         Device obj = read(deviceId);
         return obj.getGroups();
     }
 
     public void deleteGroupFromDevice(String deviceId, Long groupId) {
-        Set<Group> list = read(deviceId).getGroups();
+        List<Group> list = read(deviceId).getGroups();
         Iterator<Group> iterator = list.iterator();
         while (iterator.hasNext()) {
             if (iterator.next().getId().equals(groupId)) {
@@ -66,9 +64,27 @@ public class DeviceDao implements GenericDao <Device, String> {
         read(deviceId).setGroups(list);
     }
 
-    public void addGroupToDevice(String deviceId, Group obj) {
-        Set<Group> list = read(deviceId).getGroups();
-        list.add(obj);
+    public void addGroupToDevice(String deviceId, Group group) {
+        List<Group> list = read(deviceId).getGroups();
+        list.add(group);
         read(deviceId).setGroups(list);
     }
+
+
+
+    /**
+     * Loging by Facebook
+     *
+     * Front-end -> Back-end
+     * Input: deviceId, fbProfile, userName
+     *
+     * Back-end -> Front-end
+     * Output: returns boolean: true/false
+     * ***************************************************************************************
+     * Returns boolean value true if data was put to DB, false if data wasn't put to DB
+     *
+     * @param device device to update
+     */
+
+
 }

@@ -4,8 +4,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
 /**
- * Created by c265 on 20.07.2015.
+ * Created by Bogdan Sliptsov on 20.07.2015.
  */
+
 public class EMFactory {
     private static final EntityManager em = Persistence.createEntityManagerFactory("FRIENDSPHOTO").createEntityManager();
 
