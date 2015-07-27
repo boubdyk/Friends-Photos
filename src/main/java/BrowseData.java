@@ -58,7 +58,7 @@ public class BrowseData {
         System.out.println(devicesService.findById("bbb"));
         System.out.println(groupService.findById(40L));
 
-        System.out.println(devicesService.removeMembersFromCurrentGroup("bbb", "erer"));
+        //System.out.println(devicesService.removeMembersFromCurrentGroup("bbb", "erer"));
 
         System.out.println(devicesService.findById("bbb"));
         System.out.println(groupService.findById(40L));
