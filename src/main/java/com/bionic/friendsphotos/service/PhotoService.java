@@ -40,14 +40,8 @@ public class PhotoService {
         photoDao.create(photo);
     }
 
-    public OutputStream getPhoto (Photo photo) {
-        OutputStream out = null;
-        try {
-            out = photoDao.getPhoto(photo);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return out;
+    public File getPhoto (Photo photo) {
+        return photoDao.getPhoto(photo);
     }
 
 }

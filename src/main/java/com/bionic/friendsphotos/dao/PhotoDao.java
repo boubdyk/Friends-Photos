@@ -11,7 +11,7 @@ import java.nio.file.*;
  */
 public class PhotoDao implements GenericDao<Photo, Long> {
 
-    private static final String DIRECTORY = "E:\\FriendsPhotosBase\\";
+    private static final String DIRECTORY = "D:\\FriendsPhotosBase\\";
 
     private EntityManager em = EMFactory.getInstance();
 
@@ -28,14 +28,25 @@ public class PhotoDao implements GenericDao<Photo, Long> {
         while (file.exists()){
             String newPhotoName;
 
-            String [] separatedName = photo.getName().split("\\.");
+        /*    String [] separatedName = photo.getName().split("\\.");
             if (separatedName[0].contains("(")) {
                 String [] separatedNameWithCounter = separatedName[0].split("\\(");
                 newPhotoName = separatedNameWithCounter[0] + "(" + (counter++) + ")." + separatedName[1];
             } else {
                 separatedName[0] += "(" + (counter++) + ")";
                 newPhotoName = separatedName[0] + "." + separatedName[1];
+            }*/
+
+            if(photo.getName().startsWith("(")) {
+                String [] separatedName = photo.getName().split("\\)", 2);
+                newPhotoName = "(" + (counter++) + ")";
+                for (int i = 1; i < separatedName.length ; i++) {
+                    newPhotoName += separatedName[i];
+                }
+            } else {
+                newPhotoName = "(" + (counter++) + ") " + photo.getName();
             }
+
             photo.setName(newPhotoName);
 
             file = new File(DIRECTORY + photo.getGroupId() + "\\" + newPhotoName);
@@ -57,8 +68,8 @@ public class PhotoDao implements GenericDao<Photo, Long> {
         return photo;
     }
 
-    public OutputStream getPhoto(Photo photo) throws IOException{
-        return new FileOutputStream(DIRECTORY + photo.getGroupId() + "\\" + photo.getName());
+    public File getPhoto(Photo photo){
+        return new File(DIRECTORY, photo.getId() + "\\" + photo.getName());
     }
 
     @Override
