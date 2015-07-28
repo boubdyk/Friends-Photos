@@ -2,49 +2,50 @@ package com.bionic.friendsphotos.dao;
 
 import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
- * Created by c265 on 17.07.2015.
+ * Created by Bogdan Sliptsov on 17.07.2015.
  */
+
+@Repository
 public class DeviceDao implements GenericDao <Device, String> {
 
-    private EntityManager em = EMFactory.getInstance();
+    @PersistenceContext
+    private EntityManager em; /* = EMFactory.getInstance();*/
 
     @Override
     public String create(Device newInstance) {
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         em.persist(newInstance);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
         return newInstance.getIdDevice();
     }
 
     @Override
     public Device read(String id) {
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         return em.find(Device.class, id);
     }
 
     @Override
     public Device update(Device transientObject) {
-//        em.find(Devices.class, transientObject.getIdDevice());
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         em.merge(transientObject);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
         return transientObject;
     }
 
     @Override
     public void delete(String idDevice) {
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         em.remove(read(idDevice));
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
     }
 
     public List<Device> getAll() {
@@ -68,9 +69,9 @@ public class DeviceDao implements GenericDao <Device, String> {
         read(deviceId).setGroups(list);
     }
 
-    public void addGroupToDevice(String deviceId, Group obj) {
+    public void addGroupToDevice(String deviceId, Group group) {
         List<Group> list = read(deviceId).getGroups();
-        list.add(obj);
+        list.add(group);
         read(deviceId).setGroups(list);
     }
 }

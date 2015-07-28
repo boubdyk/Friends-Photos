@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by c265 on 07.07.2015.
+ * Created by Bogdan Sliptsov on 07.07.2015.
  */
 
 @Entity
@@ -29,7 +29,10 @@ public class Device {
     @Column(name = "description")
     String description;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Column(name = "current_group")
+    Long currentGroup;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "devices_in_groups",
             joinColumns = {@JoinColumn(name = "device_id", referencedColumnName = "id_device")},
             inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")})
@@ -37,10 +40,10 @@ public class Device {
 
     public Device() {}
 
-    public Device(String idDevice, BigInteger fbProfile, String description) {
+    public Device(String idDevice, BigInteger fbProfile, String name) {
         this.idDevice = idDevice;
         this.fbProfile = fbProfile;
-        this.description = description;
+        this.name = name;
     }
 
     public void setGroups(List<Group> groups) {
@@ -83,6 +86,42 @@ public class Device {
         this.description = description;
     }
 
+    public Long getCurrentGroup() {
+        return currentGroup;
+    }
+
+    public void setCurrentGroup(Long currentGroup) {
+        this.currentGroup = currentGroup;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Device device = (Device) o;
+
+        if (idDevice != null ? !idDevice.equals(device.idDevice) : device.idDevice != null) return false;
+        if (fbProfile != null ? !fbProfile.equals(device.fbProfile) : device.fbProfile != null) return false;
+        if (name != null ? !name.equals(device.name) : device.name != null) return false;
+        if (description != null ? !description.equals(device.description) : device.description != null) return false;
+        if (currentGroup != null ? !currentGroup.equals(device.currentGroup) : device.currentGroup != null)
+            return false;
+        return !(groups != null ? !groups.equals(device.groups) : device.groups != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = idDevice != null ? idDevice.hashCode() : 0;
+        result = 31 * result + (fbProfile != null ? fbProfile.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (currentGroup != null ? currentGroup.hashCode() : 0);
+        result = 31 * result + (groups != null ? groups.hashCode() : 0);
+        return result;
+    }
+
     @Override
     public String toString() {
         Set<Long> groupId = new HashSet<>();
@@ -94,6 +133,7 @@ public class Device {
                 ", fbProfile=" + fbProfile +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", currentGroup='" + currentGroup + '\'' +
                 ", groups=" + groupId +
                 '}';
     }
