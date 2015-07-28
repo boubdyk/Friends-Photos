@@ -17,27 +17,22 @@ import java.util.*;
 public class DeviceDao implements GenericDao <Device, String> {
 
     @PersistenceContext
-    private EntityManager em; /* = EMFactory.getInstance();*/
+    private EntityManager em;
 
     @Override
     public String create(Device newInstance) {
-//        em.getTransaction().begin();
         em.persist(newInstance);
-//        em.getTransaction().commit();
         return newInstance.getIdDevice();
     }
 
     @Override
     public Device read(String id) {
-//        em.getTransaction().begin();
         return em.find(Device.class, id);
     }
 
     @Override
     public Device update(Device transientObject) {
-//        em.getTransaction().begin();
         em.merge(transientObject);
-//        em.getTransaction().commit();
         return transientObject;
     }
 
@@ -54,8 +49,7 @@ public class DeviceDao implements GenericDao <Device, String> {
     }
 
     public List<Group> getAllGroupsOfCurrentDevice(String deviceId) {
-        Device obj = read(deviceId);
-        return obj.getGroups();
+        return read(deviceId).getGroups();
     }
 
     public void deleteGroupFromDevice(String deviceId, Long groupId) {

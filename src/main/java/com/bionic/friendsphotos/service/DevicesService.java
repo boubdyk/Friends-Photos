@@ -27,25 +27,32 @@ public class DevicesService {
     private GroupDao groupDao;
 
     public DevicesService() {
-//        devicesDao  = new DeviceDao();
-//        groupDao = new GroupDao();
     }
 
-    public void addNew(Device device) {
-        devicesDao.create(device);
+    public String addNew(Device device) {
+        if (device == null) return null;
+        return devicesDao.create(device);
     }
 
     public Device findById(String id) {
+        if (StringUtils.isEmpty(id)) return null;
         return devicesDao.read(id);
     }
 
-    public Device updateDevice(Device obj) { return devicesDao.update(obj);}
+    public Device updateDevice(Device device) {
+        if (device == null) return null;
+        return devicesDao.update(device);
+    }
 
     public void deleteDevice(String idDevice) {
+        if (StringUtils.isEmpty(idDevice)) return;
+        if (devicesDao.read(idDevice) == null) return;
         devicesDao.delete(idDevice);
     }
 
     public List<Long> getIdOfAllGroupsInCurrentDevice(String devicesId) {
+        if (StringUtils.isEmpty(devicesId)) return null;
+        if (devicesDao.read(devicesId) == null) return null;
         List<Long> list = new ArrayList<>();
         for (Group g: devicesDao.getAllGroupsOfCurrentDevice(devicesId)) {
             list.add(g.getId());
@@ -58,10 +65,16 @@ public class DevicesService {
     }
 
     public void deleteGroupFromDevice(String deviceId, Long groupId) {
-            devicesDao.deleteGroupFromDevice(deviceId, groupId);
+        if (StringUtils.isEmpty(deviceId) || groupId == null) return;
+        if (devicesDao.read(deviceId) == null) return;
+        if (!devicesDao.read(deviceId).getGroups().contains(groupDao.read(groupId))) return;
+        devicesDao.deleteGroupFromDevice(deviceId, groupId);
     }
 
     public void addGroupToDevice(String deviceId, Long groupId) {
+        if (StringUtils.isEmpty(deviceId) || groupId == null) return;
+        if (devicesDao.read(deviceId) == null) return;
+        if (devicesDao.read(deviceId).getGroups().contains(groupDao.read(groupId))) return;
         devicesDao.addGroupToDevice(deviceId, groupDao.read(groupId));
     }
 
@@ -77,6 +90,7 @@ public class DevicesService {
      */
 
     public Map<String, Object> getCurrentGroupAndUserName(String deviceId) {
+        if (StringUtils.isEmpty(deviceId)) return null;
         Device device = findById(deviceId);
         if (device != null) {
             Map<String, Object> map = new TreeMap<>();
@@ -102,10 +116,7 @@ public class DevicesService {
      */
 
     public boolean loginByFacebook(String deviceId, BigInteger fbProfile, String userName, String description) {
-        if (deviceId == null) return false;
         if (fbProfile == null) return false;
-        if (userName == null) return false;
-        if (description == null) return false;
         if (StringUtils.isEmpty(deviceId)) return false;
         if (StringUtils.isEmpty(userName)) return false;
         if (StringUtils.isEmpty(description)) return false;
@@ -140,7 +151,7 @@ public class DevicesService {
      */
     public Map<BigInteger, List<Group>> getAllFriendsOfCurrentUser(List<BigInteger> requestedFbProfileList) {
         if (requestedFbProfileList == null) return null;
-        if (requestedFbProfileList.size() == 0) return null;
+        if (requestedFbProfileList.isEmpty()) return null;
         List<Device> deviceList = devicesDao.getAll();
         List<Device> mergedList = new ArrayList<>();
         for (int i = 0; i < deviceList.size(); i++) {
@@ -150,7 +161,7 @@ public class DevicesService {
                 }
             }
         }
-        if (mergedList.size() == 0) return null;
+        if (mergedList.isEmpty()) return null;
         Map<BigInteger, List<Group>> friendsMap = new TreeMap<>();
         for (Device d: mergedList) {
             friendsMap.put(d.getFbProfile(), d.getGroups());
@@ -177,7 +188,6 @@ public class DevicesService {
      *               2. If current group has been changed.
      */
     public boolean connectUserToOpenGroup(String deviceId, Long groupId) {
-        if (deviceId == null) return false;
         if (StringUtils.isEmpty(deviceId)) return false;
         if (groupId == null) return false;
         Group group = groupDao.read(groupId);
@@ -217,9 +227,7 @@ public class DevicesService {
      *               2. If password is correct and current group has been changed.
      */
     public boolean connectUserToClosedGroup(String deviceId, Long groupId, String password) {
-        if (deviceId == null) return false;
         if (groupId == null) return false;
-        if (password == null) return false;
         if (StringUtils.isEmpty(deviceId)) return false;
         if (StringUtils.isEmpty(password)) return false;
         Group group = groupDao.read(groupId);
@@ -274,8 +282,6 @@ public class DevicesService {
      * @return true If name was changed.
      */
     public boolean changeGroupName(String deviceId, String newGroupName) {
-        if (deviceId == null) return false;
-        if (newGroupName == null) return false;
         if (StringUtils.isEmpty(deviceId)) return false;
         if (StringUtils.isEmpty(newGroupName)) return false;
         Device device = findById(deviceId);
@@ -313,8 +319,6 @@ public class DevicesService {
      * @return true If device was removed.
      */
     public boolean removeMembersFromCurrentGroup(String adminId, String idDeviceToRemove) {
-        if (adminId == null) return false;
-        if (idDeviceToRemove == null) return false;
         if (StringUtils.isEmpty(adminId)) return false;
         if (StringUtils.isEmpty(idDeviceToRemove)) return false;
         Device adminDevice = findById(adminId);
