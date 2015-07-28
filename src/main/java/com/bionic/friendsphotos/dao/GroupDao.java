@@ -17,7 +17,7 @@ import java.util.*;
 public class GroupDao implements GenericDao <Group, Long> {
 
     @PersistenceContext
-    private EntityManager em; /*= EMFactory.getInstance();*/
+    private EntityManager em;
 
     public GroupDao() {
     }
@@ -25,33 +25,25 @@ public class GroupDao implements GenericDao <Group, Long> {
 
     @Override
     public Long create(Group newInstance) {
-//        em.getTransaction().begin();
         em.persist(newInstance);
-//        em.getTransaction().commit();
         return newInstance.getId();
     }
 
 
     @Override
     public Group read(Long id) {
-//        em.getTransaction().begin();
         return em.find(Group.class, id);
     }
 
     @Override
     public Group update(Group group) {
-//        em.getTransaction().begin();
-        em.merge(group);
-//        em.getTransaction().commit();
-        return group;
+        return em.merge(group);
     }
 
     @Override
     public void delete(Long id) {
         Group obj = read(id);
-       // em.getTransaction().begin();
         em.remove(obj);
-       // em.getTransaction().commit();
     }
 
     public List<Group> getAll() {
@@ -64,8 +56,7 @@ public class GroupDao implements GenericDao <Group, Long> {
     }
 
     public List<Device> getAllDevicesFromGroup(Long groupId) {
-        Group obj = read(groupId);
-        return obj.getDevices();
+        return read(groupId).getDevices();
     }
 
     public void deleteDeviceFromGroup(Long groupId, String deviceId) {

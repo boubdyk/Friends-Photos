@@ -27,74 +27,54 @@ public class GroupService {
     private DeviceDao devicesDao;
 
     public GroupService() {
-//        groupDao = new GroupDao();
-//        devicesDao = new DeviceDao();
     }
 
 
     public List<Group> getAllGroups() {
-        List<Group> groups = groupDao.getAll();
-        return groups;
+        return groupDao.getAll();
     }
 
-   /* public Long createGroup(Group group) {
-        try {
-            if (StringUtils.isEmpty(group.getName())) {
-                return null;
-            }
-            return groupDao.create(group);
-        } catch (IllegalStateException ex) {
-            System.out.println("Cannot create group with null fields!");
-            return null;
-        }
-    }*/
-
     public Group findById(Long id) {
+        if (id == null) return null;
+        if (groupDao.read(id) == null) return null;
         return groupDao.read(id);
     }
 
-    public String updateGroup(Group obj) {
-        try {
-                return "Group" + groupDao.update(obj).getName() + " has been updated!";
-        } catch (IllegalArgumentException ex) {
-            return "Group" + obj.getName() + " doesn't exist!";
-        }
+    public Group updateGroup(Group group) {
+        if (group == null) return null;
+        if (groupDao.read(group.getId()) == null) return null;
+        return groupDao.update(group);
     }
 
-    public String deleteGroup(Long id) {
-        try {
-            groupDao.delete(id);
-            return "Group has been deleted!";
-        } catch (IllegalArgumentException ex) {
-            return "Group doesn't exist!";
-        }
+    public void deleteGroup(Long id) {
+        if (id == null) return;
+        if (groupDao.read(id) == null) return;
+        groupDao.delete(id);
     }
 
     public String getNameById(Long id) {
-        try {
-            return groupDao.getNameById(id);
-        } catch (NullPointerException ex) {
-            return "Group doesn't exist!";
-        }
-    }
-
-    public List<String> getIdOfAllDevicesInCurrentGroup(Long groupId) {
-        List<String> list = new ArrayList<>();
-        for (Device d: groupDao.getAllDevicesFromGroup(groupId)) {
-            list.add(d.getIdDevice());
-        }
-        return list;
+        if (id == null) return null;
+        if (groupDao.read(id) == null) return null;
+        return groupDao.getNameById(id);
     }
 
     public List<Device> getAllDevices(Long id) {
+        if (id == null) return null;
+        if (groupDao.read(id) == null) return null;
         return groupDao.getAllDevicesFromGroup(id);
     }
 
     public void deleteDeviceFromGroup(Long groupId, String deviceId) {
+        if (groupId == null || StringUtils.isEmpty(deviceId)) return;
+        if (groupDao.read(groupId) == null) return;
+        if (!groupDao.read(groupId).getDevices().contains(devicesDao.read(deviceId))) return;
         groupDao.deleteDeviceFromGroup(groupId, deviceId);
     }
 
     public void addDeviceToGroup(Long groupId, String deviceId) {
+        if (groupId == null || StringUtils.isEmpty(deviceId)) return;
+        if (groupDao.read(groupId) == null) return;
+        if (groupDao.read(groupId).getDevices().contains(devicesDao.read(deviceId))) return;
         groupDao.addDeviceToGroup(groupId, devicesDao.read(deviceId));
     }
 
@@ -150,7 +130,6 @@ public class GroupService {
      * @exception  NumberFormatException On parsing searchValue to Long (searching by group id)
      */
     public List<Group> getAllGroupsByNameOrID(String searchValue) {
-        if (searchValue == null) return null;
         if (StringUtils.isEmpty(searchValue)) return null;
         List<Group> allGroups = getAllGroups();
         List<Group> resultList = new ArrayList<>();
@@ -166,7 +145,7 @@ public class GroupService {
                 }
             } catch (NumberFormatException ex) { /*NOP*/ }
         }
-        if (resultList.size() == 0) return null;
+        if (resultList.isEmpty()) return null;
         return resultList;
     }
 
@@ -213,7 +192,7 @@ public class GroupService {
                 resultList.add(g);
             }
         }
-        if (resultList.size() == 0) return null;
+        if (resultList.isEmpty()) return null;
         return resultList;
     }
 
@@ -238,7 +217,6 @@ public class GroupService {
      */
     public boolean isCreator(Long groupId, String deviceId) {
         if (groupId == null) return false;
-        if (deviceId == null) return false;
         if (StringUtils.isEmpty(deviceId)) return false;
         Group group = findById(groupId);
         if (group == null) return false;
