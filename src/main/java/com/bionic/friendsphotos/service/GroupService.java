@@ -29,16 +29,42 @@ public class GroupService {
     public GroupService() {
     }
 
-
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to get all groups from table "groups" in DB.
+     *
+     *  @return List<Group> List of all groups.
+     */
     public List<Group> getAllGroups() {
         return groupDao.getAll();
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to find group by group id.
+     *
+     * @param id Unique identifier of group.
+     *
+     * @return null If group doesn't exist.
+     * @return Group object If group exists.
+     */
     public Group findById(Long id) {
         if (id == null) return null;
         if (groupDao.read(id) == null) return null;
         return groupDao.read(id);
     }
+
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to update group in DB.
+     *
+     * @param group Group object to update.
+     * @return null If group doesn't exist.
+     * @return Group object of updated group.
+     */
 
     public Group updateGroup(Group group) {
         if (group == null) return null;
@@ -46,24 +72,59 @@ public class GroupService {
         return groupDao.update(group);
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to delete group from DB if this group exists in DB.
+     *
+     * @param id Unique group identifier.
+     */
     public void deleteGroup(Long id) {
         if (id == null) return;
         if (groupDao.read(id) == null) return;
         groupDao.delete(id);
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to get Name of requested group.
+     *
+     * @param id Unique group identifier.
+     * @return null If group doesn't exist.
+     * @return Name of requested group.
+     */
     public String getNameById(Long id) {
         if (id == null) return null;
         if (groupDao.read(id) == null) return null;
         return groupDao.getNameById(id);
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to get all devices of requested group.
+     *
+     * @param id Unique group identifier
+     * @return null If group doesn't exist.
+     * @return List of all devices of requested group.
+     */
     public List<Device> getAllDevices(Long id) {
         if (id == null) return null;
         if (groupDao.read(id) == null) return null;
         return groupDao.getAllDevicesFromGroup(id);
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to delete device from requested group if group exists;
+     * device exists; devices exists in list of devices of requested group.
+     *
+     * @param groupId Unique group identifier.
+     * @param deviceId Unique device identifier.
+     *
+     */
     public void deleteDeviceFromGroup(Long groupId, String deviceId) {
         if (groupId == null || StringUtils.isEmpty(deviceId)) return;
         if (groupDao.read(groupId) == null) return;
@@ -71,6 +132,13 @@ public class GroupService {
         groupDao.deleteDeviceFromGroup(groupId, deviceId);
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to add device to requested group if group and device exists.
+     * @param groupId Unique group identifier.
+     * @param deviceId Unique device identifier.
+     */
     public void addDeviceToGroup(Long groupId, String deviceId) {
         if (groupId == null || StringUtils.isEmpty(deviceId)) return;
         if (groupDao.read(groupId) == null) return;

@@ -29,27 +29,72 @@ public class DevicesService {
     public DevicesService() {
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to add new device to table 'devices' in DB.
+     *
+     * @param device Device object.
+     * @return null If device reference equals null.
+     * @return created object.
+     */
     public String addNew(Device device) {
         if (device == null) return null;
         return devicesDao.create(device);
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to find device by device identifier.
+     *
+     * @param id Unique device identifier.
+     *
+     * @return null If device doesn't exist.
+     * @return Sought-for device object.
+     */
     public Device findById(String id) {
         if (StringUtils.isEmpty(id)) return null;
         return devicesDao.read(id);
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to update device it exists.
+     *
+     * @param device Device object
+     * @return null If device doesn't exist.
+     * @return Updated device object.
+     */
     public Device updateDevice(Device device) {
         if (device == null) return null;
         return devicesDao.update(device);
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to delete device from table in DB if it exists.
+     *
+     * @param idDevice Unique device identifier.
+     */
     public void deleteDevice(String idDevice) {
         if (StringUtils.isEmpty(idDevice)) return;
         if (devicesDao.read(idDevice) == null) return;
         devicesDao.delete(idDevice);
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to return id of all groups in requested device.
+     *
+     * @param devicesId Unique device identifier.
+     *
+     * @return null Device doesn't exist.
+     * @return List of id of all groups.
+     */
     public List<Long> getIdOfAllGroupsInCurrentDevice(String devicesId) {
         if (StringUtils.isEmpty(devicesId)) return null;
         if (devicesDao.read(devicesId) == null) return null;
@@ -60,10 +105,25 @@ public class DevicesService {
         return list;
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to return all devices in table 'devices' in DB.
+     *
+     * @return List of all devices.
+     */
     public List<Device> getAll() {
         return devicesDao.getAll();
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to delete group(if it exists) from requested device(if it exists).
+     *
+     * @param deviceId Unique device identifier.
+     * @param groupId Unique group identifier.
+     */
     public void deleteGroupFromDevice(String deviceId, Long groupId) {
         if (StringUtils.isEmpty(deviceId) || groupId == null) return;
         if (devicesDao.read(deviceId) == null) return;
@@ -71,6 +131,14 @@ public class DevicesService {
         devicesDao.deleteGroupFromDevice(deviceId, groupId);
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to add group(if it exists) to requeset device(if it exists).
+     *
+     * @param deviceId Unique device identifier.
+     * @param groupId Unique group identifier
+     */
     public void addGroupToDevice(String deviceId, Long groupId) {
         if (StringUtils.isEmpty(deviceId) || groupId == null) return;
         if (devicesDao.read(deviceId) == null) return;
