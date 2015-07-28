@@ -11,9 +11,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigInteger;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by Vlad on 23.07.2015.
@@ -23,7 +22,8 @@ import java.util.TreeMap;
 public class UserService {
 
     DevicesService ds = new DevicesService();
-
+    GroupService gs = new GroupService();
+/*
     @POST
     @Path("/change_name_by_id")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -49,7 +49,7 @@ public class UserService {
         return Response.status(201).build();
 //        }
     }
-
+*/
     @POST
     @Path("/first_opening")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -61,101 +61,143 @@ public class UserService {
         JSONObject jsonObject = (JSONObject) obj;
 
         String deviceId = (String) jsonObject.get("deviceId");
-//        Number age = (Number) jsonObject.get("age");
 
         Map<String, Object> map = ds.getCurrentGroupAndUserName(deviceId);
 
 
-//
-//        System.out.println(map.get(0));
-//
-//        if(map == null){
-//            return Response.status(304).build();
-//        } else {
-            //String result = "Device saved: " + deviceId;
+        if(map == null){
+            return Response.status(304).build();
+        } else {
+            String result = "Device saved: " + deviceId;
             return Response.status(201).entity(map).build();
-//        }
+        }
+    }
+    @POST
+    @Path("/login_by_fb")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response loginByFB(String input) throws ParseException{
+
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(input);
+        JSONObject jsonObject = (JSONObject) obj;
+
+        String deviceId = (String) jsonObject.get("deviceId");
+        String userName = (String) jsonObject.get("userName");
+        String description = (String) jsonObject.get("description");
+        BigInteger fbProfile = (BigInteger) jsonObject.get("fbProfile");
+
+        boolean login =  ds.loginByFacebook(deviceId, fbProfile, userName, description);
+
+        if(login) {
+            return Response.status(201).build();
+        } else {
+            return Response.status(304).build();
+        }
     }
 /*
-    @POST
-    @Path("/loginByFB")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response loginByFB(
-            @FormParam("deviceId") String deviceID,
-            @FormParam("fbProfile")BigInteger fbProfile,
-            @FormParam("userName") String userName,
-            @FormParam("description") String description){
-
-        //ds.loginByFacebook(deviceID, fbProfile, userName, description);
-
-        return Response.status(201).build();
-    }
-
     @GET
-    @Path("/searchGroupByFBFriend")
+    @Path("/search_group_by_fb_friend")
     @Produces(MediaType.APPLICATION_JSON)
     public Response searchGroupByFBFriend(){
 
         return Response.status(200).build();
     }
+*/
 
     @GET
-    @Path("/searchGroupByNameOrId")
+    @Path("/search_group_by_name_or_id")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response searchGroupByName(@FormParam("searchValue") String searchValue){
+    public List searchGroupByName(String input) throws ParseException {
 
-//        gs.getAllGroupsByNameOrID(searchValue);
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(input);
+        JSONObject jsonObject = (JSONObject) obj;
 
-        return Response.status(200).build();
+        String searchValue = (String) jsonObject.get("searchValue");
+
+        return gs.getAllGroupsByNameOrID(searchValue);
     }
 
     @GET
-    @Path("/searchGroupByGPS")
+    @Path("/search_group_by_gps")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response searchGroupByGPS(@FormParam("latitude")Double latitude,
-                                 @FormParam("longitude")Double longitude){
+    public List searchGroupByGPS(String input) throws ParseException {
 
-        //        gs.getAllGroupsByGPS(latitude, longitude);
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(input);
+        JSONObject jsonObject = (JSONObject) obj;
 
-        return Response.status(200).build();
+        Double latitude = (Double) jsonObject.get("latitude");
+        Double longitude = (Double) jsonObject.get("longitude");
+
+        return gs.getAllGroupsByGPS(latitude, longitude);
     }
 
     @POST
-    @Path("/connectToOpenGroup")
+    @Path("/connect_to_open_group")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response connectToOpenGroup(@FormParam("deviceId") String deviceId,
-                                   @FormParam("groupId") Long groupId){
-//        ds.connectUserToOpenGroup(deviceId, groupId);
-        return Response.status(200).build();
+    public Response connectToOpenGroup(String input) throws ParseException{
+
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(input);
+        JSONObject jsonObject = (JSONObject) obj;
+
+        String deviceId = (String) jsonObject.get("deviceId");
+        Long groupId = (Long) jsonObject.get("groupId");
+
+        boolean ans = ds.connectUserToOpenGroup(deviceId, groupId);
+
+        if(ans) {
+            return Response.status(200).build();
+        } else {
+            return Response.status(304).build();
+        }
     }
 
 
     @POST
-    @Path("/connectToClosedGroup")
+    @Path("/connect_to_closed_group")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response connectToClosedGroup(@FormParam("deviceId")String deviceId,
-                                     @FormParam("groupId")Long groupId,
-                                     @FormParam("password")String password){
+    public Response connectToClosedGroup(String input) throws ParseException {
 
-//        ds.connectUserToClosedGroup(deviceId, groupId, password);
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(input);
+        JSONObject jsonObject = (JSONObject) obj;
 
-        return Response.status(200).build();
+        String deviceId = (String) jsonObject.get("deviceId");
+        Long groupId = (Long) jsonObject.get("groupId");
+        String password = (String) jsonObject.get("password");
+
+        boolean ans = ds.connectUserToClosedGroup(deviceId, groupId, password);
+
+        if(ans) {
+            return Response.status(200).build();
+        } else {
+            return Response.status(304).build();
+        }
     }
-
+   /*
     @POST
-    @Path("/connectToOpenGroup")
+    @Path("/connect_to_open_group")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void connectToGroup(){}
+    public void connectToGroup(){
+
+    }
+  */
 
     @GET
-    @Path("/getAllCurrentGroupMembers")
+    @Path("/get_all_current_group_members")
     @Produces(MediaType.APPLICATION_JSON)
-    public void getAllCurrentGroupMembers(@FormParam("deviceId")String deviceId){
+    public List getAllCurrentGroupMembers(String input) throws ParseException {
 
-//        List<> list = ds.membersOfUsersCurrentGroup(deviceId);
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(input);
+        JSONObject jsonObject = (JSONObject) obj;
 
-//        return list;
+        String deviceId = (String) jsonObject.get("deviceId");
 
+        List list = ds.membersOfUsersCurrentGroup(deviceId);
+
+        return list;
     }
- */
 }

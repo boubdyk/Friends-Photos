@@ -8,22 +8,22 @@ import javax.ws.rs.core.Response;
  * Created by Vlad on 23.07.2015.
  */
 
-@Path("/PhotoREST")
+@Path("/photo_rest")
 public class PhotoService {
 
     @GET
-    @Path("/checkPhoto")
+    @Path("/check_photo")
     @Produces(MediaType.APPLICATION_JSON)
     public void checkPhoto(){
     }
 
     @GET
-    @Path("/getPhoto")
+    @Path("/get_photo")
     @Produces(MediaType.APPLICATION_JSON)
     public void getPhoto(){}
 
     @POST
-    @Path("/setNewPhoto")
+    @Path("/set_new_photo")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response setNewPhoto(){
         String result = "New photo added";

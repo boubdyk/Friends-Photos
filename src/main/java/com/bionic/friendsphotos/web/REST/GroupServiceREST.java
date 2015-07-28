@@ -11,13 +11,13 @@ import javax.ws.rs.core.Response;
  * Created by Vlad on 23.07.2015.
  */
 
-@Path("/GroupREST")
+@Path("/group_rest")
 public class GroupServiceREST {
 
     GroupService gs;
 
     @POST
-    @Path("/createOpenGroup")
+    @Path("/create_open_group")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createOpenGroup(Group group){
 
@@ -26,7 +26,7 @@ public class GroupServiceREST {
     }
 
     @POST
-    @Path("/createClosedGroup")
+    @Path("/create_closed_group")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createClosedGroup(Group group){
 
@@ -35,7 +35,7 @@ public class GroupServiceREST {
     }
 
     @POST
-    @Path("/createModerateGroup")
+    @Path("/create_moderate_group")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createModerateGroup(Group group){
         String result = "Moderate Group is created with ID: " + group.getId();
@@ -43,23 +43,21 @@ public class GroupServiceREST {
     }
 
     @POST
-    @Path("/changeGroupName")
+    @Path("/change_group_name")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response changeGroupName(@FormParam("deviceId")String deviceId,
-                                    @FormParam("newGroupName") String newGroupName){
+    public Response changeGroupName(){
 
-        gs = new GroupService();
+//        gs = new GroupService();
 //        gs.changeGroupName(deviceId, newGroupName);
         return Response.status(201).build();
     }
 
     @DELETE
-    @Path("/deleteMembersGroup")
+    @Path("/delete_members_group")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteMembersInGroup(@FormParam("adminId")String adminId,
-                                         @FormParam("idDeviceToRemove")String idDeviceToRemove){
+    public Response deleteMembersInGroup(){
 
-        gs = new GroupService();
+//        gs = new GroupService();
 //        gs.removeMembersFromCurrentGroup(adminId, idDeviceToRemove):
 
         return Response.status(201).build();
