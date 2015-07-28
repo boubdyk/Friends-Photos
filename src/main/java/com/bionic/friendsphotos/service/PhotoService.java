@@ -7,20 +7,30 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.stream.ImageInputStream;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
+
+import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.*;
 /**
  * Created by c267 on 21.07.2015.
  */
+
+@Named
+@Transactional
 public class PhotoService {
+
+    @Inject
     private static PhotoDao photoDao;
 
     public PhotoService() {
-        photoDao = new PhotoDao();
+
+//        photoDao = new PhotoDao();
     }
 
     public void create(Photo photo){

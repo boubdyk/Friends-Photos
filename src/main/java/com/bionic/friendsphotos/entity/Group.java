@@ -37,7 +37,14 @@ public class Group {
     @Column(name = "longitude")
     Double longitude;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    /**
+     * For local use: FetchType.EAGER
+     */
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    /**
+     * For server use: FetchType.LAZY
+     */
+//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "devices_in_groups",
             joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "device_id", referencedColumnName = "id_device")})

@@ -4,8 +4,11 @@ import com.bionic.friendsphotos.entity.Photo;
 import com.bionic.friendsphotos.service.DevicesService;
 import com.bionic.friendsphotos.service.GroupService;
 import com.bionic.friendsphotos.service.PhotoService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
+import java.io.File;
 import java.math.BigInteger;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,9 +20,20 @@ import java.util.*;
  */
 
 public class BrowseData {
-    static GroupService groupService = new GroupService();
-    static DevicesService devicesService = new DevicesService();
-    static PhotoService photoService = new PhotoService();
+//    static GroupService groupService = new GroupService();
+//    static DevicesService devicesService = new DevicesService();
+//    static PhotoService photoService = new PhotoService();
+
+
+    private static ApplicationContext context;
+    private static GroupService groupService;
+    private static DevicesService devicesService;
+
+    static {
+        context = new ClassPathXmlApplicationContext("META-INF/app-context.xml");
+        groupService = context.getBean(GroupService.class);
+        devicesService = context.getBean(DevicesService.class);
+    }
 
     static void browseTableGroup() {
         System.out.println("\n");
@@ -49,7 +63,9 @@ public class BrowseData {
     }
 
     public static void main(String[] args) throws IOException {
-
+//
+//        File f = new File("src/main/resources/META-INF/app-context.xml");
+//        System.out.println("Exist test: " + f.exists());
 
         browseTableGroup();
         browseTableDevices();
