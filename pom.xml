@@ -59,6 +59,14 @@
             <version>1.8</version>
         </dependency>
 
+        <!-- Jersey-Multipart -->
+
+        <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-multipart</artifactId>
+            <version>1.8</version>
+        </dependency>
+
         <!-- JSON-simple -->
 
         <dependency>
@@ -76,6 +84,8 @@
             <scope>test</scope>
         </dependency>
 
+
+
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
@@ -90,6 +100,7 @@
         </dependency>
 
         <!-- Springframework -->
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>

@@ -22,13 +22,35 @@ import javax.ws.rs.core.Response;
 
 @Path("/group_rest")
 public class GroupServiceREST {
-
+    /**
+     * Creating object GroupService for accessing to it's methods.
+     */
     private GroupService gs = new GroupService();
+    /**
+     * Creating object DeviceService for accessing to it's methods.
+     */
     private DevicesService ds = new DevicesService();
-
+    /**
+     * Variable for declaring answer from server with intuitive name.
+     */
     private final int notCreate = 304;
+    /**
+     * Variable for declaring answer from server with intuitive name.
+     */
     private final int created = 201;
 
+    /**
+     * @param input  json file which must contain:
+     *              <ul>
+     *                  <li>String groupName</li>
+     *                  <li>Byte groupType</li>
+     *                  <li>String password</li>
+     *                  <li>String creatorId</li>
+     *                  <li>Double coordinateX</li>
+     *                  <li>Double coordinateY</li>
+     *             </ul>
+     * @return ID of new group
+     */
     @POST
     @Path("/create_group")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -61,6 +83,21 @@ public class GroupServiceREST {
         return Response.status(201).entity(result).build();
     }
 */
+
+    /**
+     *
+     * @param input   json file which must contain:
+     *                <ul>
+     *                      <li>String deviceId</li>
+     *                      <li>String newGroupName</li>
+     *                </ul>
+     * @return answer from server:
+     *                <ul>
+     *                    <li>304 if not changed name of group</li>
+     *                    <li>201 if name of group changed</li>
+     *                </ul>
+     */
+
     @POST
     @Path("/change_group_name")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -77,6 +114,20 @@ public class GroupServiceREST {
             return Response.status(notCreate).build();
         }
     }
+
+    /**
+     *
+     * @param input json file which must contain:
+     *                <ul>
+     *                      <li>String adminId</li>
+     *                      <li>String idDeviceToRemove</li>
+     *                </ul>
+     * @return answer from server:
+     *                <ul>
+     *                      <li>304 if members of group not deleted</li>
+     *                      <li>201 if deleting successful </li>
+     *                </ul>
+     */
 
     @DELETE
     @Path("/delete_members_group")
@@ -95,12 +146,15 @@ public class GroupServiceREST {
         }
     }
 
+    /**
+     * @param input json file which need to parse
+     * @return JSONObject
+     */
     private JSONObject parse(final String input) {
         try {
             JSONParser parser = new JSONParser();
             Object obj = parser.parse(input);
-            JSONObject jsonObject = (JSONObject) obj;
-            return jsonObject;
+            return (JSONObject) obj;
         } catch (ParseException pe) {
             pe.printStackTrace();
             return null;
