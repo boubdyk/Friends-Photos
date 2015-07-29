@@ -5,10 +5,7 @@ import com.bionic.friendsphotos.service.DevicesService;
 import com.bionic.friendsphotos.service.GroupService;
 import com.bionic.friendsphotos.service.PhotoService;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.math.BigInteger;
 
 import java.util.*;
 
@@ -50,7 +47,7 @@ public class BrowseData {
     public static void main(String[] args) throws IOException {
 
 
-
+        /*
         browseTableGroup();
         browseTableDevices();
 
@@ -66,11 +63,29 @@ public class BrowseData {
 
 
 
-       /* Photo photo = new Photo(3L , "aaa", "photo.2015.(mysuperphoto).png");
+        Photo photo = new Photo(3L , "aaa", "photo.2015.(mysuperphoto).png");
 
-        photoService.savePhoto(photo, new FileInputStream("D:\\qwe.png"));
+        photoService.saveSinglePhoto(photo, new FileInputStream("D:\\qwe.png"));
 
         System.out.println(photoService.getPhoto(photo).toString());*/
+
+
+        // Get all group photos
+        List<Photo> list = photoService.getGroupInfo(groupService.findById(3L));
+
+        // Get photo by photo ID
+        //Photo photo = photoService.getSingleInfo(list.get(0).getId());
+
+        // Download this photo
+        //photoService.getPhotoFromFileSystem(photo);
+        System.out.println(list.get(0).toString());
+
+        String photo = photoService.getSingleFile(list.get(0));
+
+        list.get(0).setName("base64test.png");
+
+        photoService.saveSinglePhoto(list.get(0), photo);
+
 
     }
 }

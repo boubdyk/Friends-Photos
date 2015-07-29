@@ -71,4 +71,14 @@ public class Photo {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Photo{" +
+                "id=" + id +
+                ", groupId=" + groupId +
+                ", ownerId='" + ownerId + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
