@@ -35,8 +35,8 @@ public class DevicesService {
      * This method is used to add new device to table 'devices' in DB.
      *
      * @param device Device object.
-     * @return null If device reference equals null.
-     * @return created object.
+     * @return 1. Null If device reference equals null.
+     *         2. Created object.
      */
     public String addNew(Device device) {
         if (device == null) return null;
@@ -50,8 +50,8 @@ public class DevicesService {
      *
      * @param id Unique device identifier.
      *
-     * @return null If device doesn't exist.
-     * @return Sought-for device object.
+     * @return 1. Null If device doesn't exist.
+     *         2. Sought-for device object.
      */
     public Device findById(String id) {
         if (StringUtils.isEmpty(id)) return null;
@@ -64,8 +64,8 @@ public class DevicesService {
      * This method is used to update device it exists.
      *
      * @param device Device object
-     * @return null If device doesn't exist.
-     * @return Updated device object.
+     * @return 1. Null If device doesn't exist.
+     *         2. Updated device object.
      */
     public Device updateDevice(Device device) {
         if (device == null) return null;
@@ -92,8 +92,8 @@ public class DevicesService {
      *
      * @param devicesId Unique device identifier.
      *
-     * @return null Device doesn't exist.
-     * @return List of id of all groups.
+     * @return 1. Null Device doesn't exist.
+     *         2. List of id of all groups.
      */
     public List<Long> getIdOfAllGroupsInCurrentDevice(String devicesId) {
         if (StringUtils.isEmpty(devicesId)) return null;
@@ -212,10 +212,10 @@ public class DevicesService {
      *
      * @param requestedFbProfileList List of all friends of current user.
      *
-     * @return null 1. If input reference is null;
+     * @return Null 1. If input reference is null;
      *              2. If input list is empty;
      *              3. If nobody in list of friends has FriendPhoto application on his device.
-     * @return Map of all friends that has FriendsPhoto application and also list of their groups.
+     *         Map of all friends that has FriendsPhoto application and also list of their groups.
      */
     public Map<BigInteger, List<Group>> getAllFriendsOfCurrentUser(List<BigInteger> requestedFbProfileList) {
         if (requestedFbProfileList == null) return null;
@@ -247,12 +247,12 @@ public class DevicesService {
      * @param deviceId Device unique inedtifier.
      * @param groupId Group unique identifier.
      *
-     * @return false 1. If deviceId reference is null;
+     * @return False 1. If deviceId reference is null;
      *               2. If deficeId is empty;
      *               3. If groupId reference is null;
      *               4. If group doesn't exist;
      *               5. If device doesn't exist;
-     * @return true  1. If group that user want to connect is already current for his device;
+     *         True  1. If group that user want to connect is already current for his device;
      *               2. If current group has been changed.
      */
     public boolean connectUserToOpenGroup(String deviceId, Long groupId) {
@@ -283,7 +283,7 @@ public class DevicesService {
      * @param groupId Group unique identifier.
      * @param password Password to closed group.
      *
-     * @return false 1. If deviceId reference is null;
+     * @return False 1. If deviceId reference is null;
      *               2. If groupId reference is null;
      *               3. If password reference is null;
      *               4. If deviceId is empty;
@@ -291,7 +291,7 @@ public class DevicesService {
      *               6. If group doesn't exist;
      *               7. If device doesn't exist;
      *               8. If password is incorrect.
-     * @return true  1. If group that user want to connect is already current for his device;
+     *         True  1. If group that user want to connect is already current for his device;
      *               2. If password is correct and current group has been changed.
      */
     public boolean connectUserToClosedGroup(String deviceId, Long groupId, String password) {
@@ -319,9 +319,9 @@ public class DevicesService {
      *
      * @param deviceId Device unique inedtifier.
      *
-     * @return null 1. If deviceId reference is null;
+     * @return Null 1. If deviceId reference is null;
      *              2. If device doesn't exist.
-     * @return List of members of users current group.
+     *         List of members of users current group.
      */
     public List<Device> membersOfUsersCurrentGroup(String deviceId) {
         if (deviceId == null) return null;
@@ -339,7 +339,7 @@ public class DevicesService {
      * @param deviceId Device unique inedtifier.
      * @param newGroupName New name for users current group.
      *
-     * @return false 1. If deviceId reference is null;
+     * @return False 1. If deviceId reference is null;
      *               2. If newGroupName reference is null;
      *               3. If deviceId is empty;
      *               4. If newGroupName is empty;
@@ -347,7 +347,7 @@ public class DevicesService {
      *               6. If this device is not a creator of current group;
      *               7. If group doesn't exist;
      *               8. If name wasn't changed.
-     * @return true If name was changed.
+     *         True If name was changed.
      */
     public boolean changeGroupName(String deviceId, String newGroupName) {
         if (StringUtils.isEmpty(deviceId)) return false;
@@ -375,7 +375,7 @@ public class DevicesService {
      * @param adminId Device unique identifier which has admin rights.
      * @param idDeviceToRemove Device unique identifier which should be removed.
      *
-     * @return false 1. If adminId reference is null;
+     * @return False 1. If adminId reference is null;
      *               2. If idDeviceToRemove reference is null;
      *               3. If adminId is empty;
      *               4. If idDeviceToRemove is empty;
@@ -384,7 +384,7 @@ public class DevicesService {
      *               7. If group doesn't exist;
      *               8. If adminDevice is not a creator of current group;
      *               9. If device wasn't removed;
-     * @return true If device was removed.
+     *         True If device was removed.
      */
     public boolean removeMembersFromCurrentGroup(String adminId, String idDeviceToRemove) {
         if (StringUtils.isEmpty(adminId)) return false;
