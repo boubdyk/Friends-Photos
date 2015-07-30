@@ -17,9 +17,9 @@ public class ClientPost {
             Client client = Client.create();
 
             WebResource webResource = client
-                    .resource("http://localhost:8080/FriendsPhotos/rest/UsersREST/firstOpen");
+                    .resource("http://localhost:8080/FriendsPhotos/rest/users_rest/first_opening");
 
-            String input = "FJJFI3224234JFL";
+            String input = "{\"deviceId\":\"bbb\"}";
 
             ClientResponse response = webResource.type("application/json")
                     .post(ClientResponse.class, input);
@@ -38,6 +38,5 @@ public class ClientPost {
             e.printStackTrace();
 
         }
-
     }
 }

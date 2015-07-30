@@ -5,87 +5,144 @@ import com.bionic.friendsphotos.dao.GroupDao;
 import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.math.BigInteger;
 import java.util.*;
 
 /**
  * Created by Bogdan Sliptsov on 14.07.2015.
  */
+
+@Named
+@Transactional
 public class GroupService {
 
-    private static GroupDao groupDao;
-    private static DeviceDao devicesDao;
+    @Inject
+    private GroupDao groupDao;
+
+    @Inject
+    private DeviceDao devicesDao;
 
     public GroupService() {
-        groupDao = new GroupDao();
-        devicesDao = new DeviceDao();
     }
 
-
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to get all groups from table "groups" in DB.
+     *
+     *  @return List<Group> List of all groups.
+     */
     public List<Group> getAllGroups() {
-        List<Group> groups = groupDao.getAll();
-        return groups;
+        return groupDao.getAll();
     }
 
-   /* public Long createGroup(Group group) {
-        try {
-            if (StringUtils.isEmpty(group.getName())) {
-                return null;
-            }
-            return groupDao.create(group);
-        } catch (IllegalStateException ex) {
-            System.out.println("Cannot create group with null fields!");
-            return null;
-        }
-    }*/
-
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to find group by group id.
+     *
+     * @param id Unique identifier of group.
+     *
+     * @return 1. Null If group doesn't exist.
+     *         2. Group object If group exists.
+     */
     public Group findById(Long id) {
+        if (id == null) return null;
+        if (groupDao.read(id) == null) return null;
         return groupDao.read(id);
     }
 
-    public String updateGroup(Group obj) {
-        try {
-                return "Group" + groupDao.update(obj).getName() + " has been updated!";
-        } catch (IllegalArgumentException ex) {
-            return "Group" + obj.getName() + " doesn't exist!";
-        }
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to update group in DB.
+     *
+     * @param group Group object to update.
+     * @return 1. Null If group doesn't exist.
+     *         2. Group object of updated group.
+     */
+
+    public Group updateGroup(Group group) {
+        if (group == null) return null;
+        if (groupDao.read(group.getId()) == null) return null;
+        return groupDao.update(group);
     }
 
-    public String deleteGroup(Long id) {
-        try {
-            groupDao.delete(id);
-            return "Group has been deleted!";
-        } catch (IllegalArgumentException ex) {
-            return "Group doesn't exist!";
-        }
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to delete group from DB if this group exists in DB.
+     *
+     * @param id Unique group identifier.
+     */
+    public void deleteGroup(Long id) {
+        if (id == null) return;
+        if (groupDao.read(id) == null) return;
+        groupDao.delete(id);
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to get Name of requested group.
+     *
+     * @param id Unique group identifier.
+     * @return 1. Null If group doesn't exist.
+     *         2. Name of requested group.
+     */
     public String getNameById(Long id) {
-        try {
-            return groupDao.getNameById(id);
-        } catch (NullPointerException ex) {
-            return "Group doesn't exist!";
-        }
+        if (id == null) return null;
+        if (groupDao.read(id) == null) return null;
+        return groupDao.getNameById(id);
     }
 
-    public List<String> getIdOfAllDevicesInCurrentGroup(Long groupId) {
-        List<String> list = new ArrayList<>();
-        for (Device d: groupDao.getAllDevicesFromGroup(groupId)) {
-            list.add(d.getIdDevice());
-        }
-        return list;
-    }
-
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to get all devices of requested group.
+     *
+     * @param id Unique group identifier
+     * @return 1. Null If group doesn't exist.
+     *         2. List of all devices of requested group.
+     */
     public List<Device> getAllDevices(Long id) {
+        if (id == null) return null;
+        if (groupDao.read(id) == null) return null;
         return groupDao.getAllDevicesFromGroup(id);
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to delete device from requested group if group exists;
+     * device exists; devices exists in list of devices of requested group.
+     *
+     * @param groupId Unique group identifier.
+     * @param deviceId Unique device identifier.
+     *
+     */
     public void deleteDeviceFromGroup(Long groupId, String deviceId) {
+        if (groupId == null || StringUtils.isEmpty(deviceId)) return;
+        if (groupDao.read(groupId) == null) return;
+        if (!groupDao.read(groupId).getDevices().contains(devicesDao.read(deviceId))) return;
         groupDao.deleteDeviceFromGroup(groupId, deviceId);
     }
 
+    /**
+     * @author Bogdan Sliptsov
+     *
+     * This method is used to add device to requested group if group and device exists.
+     * @param groupId Unique group identifier.
+     * @param deviceId Unique device identifier.
+     */
     public void addDeviceToGroup(Long groupId, String deviceId) {
+        if (groupId == null || StringUtils.isEmpty(deviceId)) return;
+        if (groupDao.read(groupId) == null) return;
+        if (groupDao.read(groupId).getDevices().contains(devicesDao.read(deviceId))) return;
         groupDao.addDeviceToGroup(groupId, devicesDao.read(deviceId));
     }
 
@@ -105,7 +162,7 @@ public class GroupService {
      * @param coordinateY Y coordinate of requested device.
      *
      * @return Long This returns unique identifier of just created group.
-     * @return null 1. If groupName equals null;
+     *         Null 1. If groupName equals null;
      *              2. If groupType null or != [0, 1, 2];
      *              3. If groupType equals 1 but password is null or empty;
      *              4. If creatorId is null;
@@ -135,13 +192,12 @@ public class GroupService {
      *
      * @param searchValue String search value which can be group-name or group-id
      *
-     * @return null 1. If searchValue reference is null;
+     * @return Null 1. If searchValue reference is null;
      *              2. If searchValue is empty;
      *              3. If there are no groups with such name or id.
      * @exception  NumberFormatException On parsing searchValue to Long (searching by group id)
      */
     public List<Group> getAllGroupsByNameOrID(String searchValue) {
-        if (searchValue == null) return null;
         if (StringUtils.isEmpty(searchValue)) return null;
         List<Group> allGroups = getAllGroups();
         List<Group> resultList = new ArrayList<>();
@@ -157,7 +213,7 @@ public class GroupService {
                 }
             } catch (NumberFormatException ex) { /*NOP*/ }
         }
-        if (resultList.size() == 0) return null;
+        if (resultList.isEmpty()) return null;
         return resultList;
     }
 
@@ -190,9 +246,9 @@ public class GroupService {
      * @param latitude Latitude of requested device
      * @param longitude Longitude of requested device
      *
-     * @return null 1. If latitude or longitude is null;
+     * @return Null 1. If latitude or longitude is null;
      *              2. If there are no groups wihin radius of 1 km
-     * @return List of groups within radius of 1 km.
+     *         List of groups within radius of 1 km.
      */
     public List<Group> getAllGroupsByGPS(Double latitude, Double longitude) {
         if (latitude == null || longitude == null) return null;
@@ -204,7 +260,7 @@ public class GroupService {
                 resultList.add(g);
             }
         }
-        if (resultList.size() == 0) return null;
+        if (resultList.isEmpty()) return null;
         return resultList;
     }
 
@@ -229,7 +285,6 @@ public class GroupService {
      */
     public boolean isCreator(Long groupId, String deviceId) {
         if (groupId == null) return false;
-        if (deviceId == null) return false;
         if (StringUtils.isEmpty(deviceId)) return false;
         Group group = findById(groupId);
         if (group == null) return false;

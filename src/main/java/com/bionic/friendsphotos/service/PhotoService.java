@@ -7,18 +7,39 @@ import java.io.*;
 import java.util.Base64;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.stream.ImageInputStream;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Iterator;
+
+import org.springframework.transaction.annotation.Transactional;
+import org.w3c.dom.*;
 /**
  * Service to handling photos
  * @author Yevhenii Semenov
  *
  */
+
+@Named
+@Transactional
 public class PhotoService {
 
+
+    private static final String DIRECTORY = "E:\\FriendsPhotosBase\\";
+    @Inject
     private PhotoDao photoDao;
-    private static final String DIRECTORY = "D:\\FriendsPhotosBase\\";
+
 
     public PhotoService() {
-        photoDao = new PhotoDao();
+
+//        photoDao = new PhotoDao();
     }
 
     /**
@@ -141,7 +162,7 @@ public class PhotoService {
         } else {
             newPhotoName = "(" + (counter++) + ") " + name;
         }
-        return name;
+        return newPhotoName;
     }
 
 

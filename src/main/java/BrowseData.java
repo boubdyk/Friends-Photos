@@ -4,6 +4,13 @@ import com.bionic.friendsphotos.entity.Photo;
 import com.bionic.friendsphotos.service.DevicesService;
 import com.bionic.friendsphotos.service.GroupService;
 import com.bionic.friendsphotos.service.PhotoService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+
+import java.io.File;
+import java.math.BigInteger;
+import java.io.FileInputStream;
 
 import java.io.IOException;
 
@@ -14,9 +21,22 @@ import java.util.*;
  */
 
 public class BrowseData {
-    static GroupService groupService = new GroupService();
-    static DevicesService devicesService = new DevicesService();
-    static PhotoService photoService = new PhotoService();
+//    static GroupService groupService = new GroupService();
+//    static DevicesService devicesService = new DevicesService();
+//    static PhotoService photoService = new PhotoService();
+
+
+    private static ApplicationContext context;
+    private static GroupService groupService;
+    private static DevicesService devicesService;
+    private static PhotoService photoService;
+
+    static {
+        context = new ClassPathXmlApplicationContext("META-INF/app-context.xml");
+        groupService = context.getBean(GroupService.class);
+        devicesService = context.getBean(DevicesService.class);
+        photoService = context.getBean(PhotoService.class);
+    }
 
     static void browseTableGroup() {
         System.out.println("\n");
@@ -45,7 +65,9 @@ public class BrowseData {
     }
 
     public static void main(String[] args) throws IOException {
-
+//
+//        File f = new File("src/main/resources/META-INF/app-context.xml");
+//        System.out.println("Exist test: " + f.exists());
 
         /*
         browseTableGroup();
@@ -71,7 +93,7 @@ public class BrowseData {
 
 
         // Get all group photos
-        List<Photo> list = photoService.getGroupInfo(groupService.findById(3L));
+        List<Photo> list = photoService.getGroupInfo(groupService.findById(10L));
 
         // Get photo by photo ID
         //Photo photo = photoService.getSingleInfo(list.get(0).getId());
@@ -82,9 +104,9 @@ public class BrowseData {
 
         String photo = photoService.getSingleFile(list.get(0));
 
-        list.get(0).setName("base64test.png");
+        //list.get(0).setName("base64test.png");
 
-        photoService.saveSinglePhoto(list.get(0), photo);
+        photoService.saveSinglePhoto(new Photo(10L, "aaa", "base64testik.png"), photo);
 
 
     }

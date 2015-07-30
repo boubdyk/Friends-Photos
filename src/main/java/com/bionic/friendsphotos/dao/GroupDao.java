@@ -2,8 +2,10 @@ package com.bionic.friendsphotos.dao;
 
 import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.*;
 
@@ -11,9 +13,11 @@ import java.util.*;
  * Created by Bogdan Sliptsov on 15.07.2015.
  */
 
+@Repository
 public class GroupDao implements GenericDao <Group, Long> {
 
-    private EntityManager em = EMFactory.getInstance();
+    @PersistenceContext
+    private EntityManager em;
 
     public GroupDao() {
     }
@@ -21,33 +25,25 @@ public class GroupDao implements GenericDao <Group, Long> {
 
     @Override
     public Long create(Group newInstance) {
-        em.getTransaction().begin();
         em.persist(newInstance);
-        em.getTransaction().commit();
         return newInstance.getId();
     }
 
 
     @Override
     public Group read(Long id) {
-//        em.getTransaction().begin();
         return em.find(Group.class, id);
     }
 
     @Override
     public Group update(Group group) {
-        em.getTransaction().begin();
-        em.merge(group);
-        em.getTransaction().commit();
-        return group;
+        return em.merge(group);
     }
 
     @Override
     public void delete(Long id) {
         Group obj = read(id);
-       // em.getTransaction().begin();
         em.remove(obj);
-       // em.getTransaction().commit();
     }
 
     public List<Group> getAll() {
@@ -60,8 +56,7 @@ public class GroupDao implements GenericDao <Group, Long> {
     }
 
     public List<Device> getAllDevicesFromGroup(Long groupId) {
-        Group obj = read(groupId);
-        return obj.getDevices();
+        return read(groupId).getDevices();
     }
 
     public void deleteDeviceFromGroup(Long groupId, String deviceId) {
