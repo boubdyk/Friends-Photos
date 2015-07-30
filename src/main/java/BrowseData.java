@@ -11,8 +11,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.io.File;
 import java.math.BigInteger;
 import java.io.FileInputStream;
+
 import java.io.IOException;
-import java.io.InputStream;
+
 import java.util.*;
 
 /**
@@ -28,11 +29,13 @@ public class BrowseData {
     private static ApplicationContext context;
     private static GroupService groupService;
     private static DevicesService devicesService;
+    private static PhotoService photoService;
 
     static {
         context = new ClassPathXmlApplicationContext("META-INF/app-context.xml");
         groupService = context.getBean(GroupService.class);
         devicesService = context.getBean(DevicesService.class);
+        photoService = context.getBean(PhotoService.class);
     }
 
     static void browseTableGroup() {
@@ -44,7 +47,6 @@ public class BrowseData {
                     groups.getType(), groups.getPassword(), groups.getIdCreator(),
                             groups.getLatitude(),
                     groups.getLongitude(), "\n");
-
         }
         System.out.println();
     }
@@ -67,6 +69,7 @@ public class BrowseData {
 //        File f = new File("src/main/resources/META-INF/app-context.xml");
 //        System.out.println("Exist test: " + f.exists());
 
+        /*
         browseTableGroup();
         browseTableDevices();
 
@@ -82,11 +85,28 @@ public class BrowseData {
 
 
 
-       /* Photo photo = new Photo(3L , "aaa", "photo.2015.(mysuperphoto).png");
+        Photo photo = new Photo(3L , "aaa", "photo.2015.(mysuperphoto).png");
 
-        photoService.savePhoto(photo, new FileInputStream("D:\\qwe.png"));
+        photoService.saveSinglePhoto(photo, new FileInputStream("D:\\qwe.png"));
 
         System.out.println(photoService.getPhoto(photo).toString());*/
+
+
+        // Get all group photos
+        List<Photo> list = photoService.getGroupInfo(groupService.findById(10L));
+
+        // Get photo by photo ID
+        //Photo photo = photoService.getSingleInfo(list.get(0).getId());
+
+        // Download this photo
+        //photoService.getPhotoFromFileSystem(photo);
+        System.out.println(list.get(0).toString());
+
+        String photo = photoService.getSingleFile(list.get(0));
+
+        //list.get(0).setName("base64test.png");
+
+        photoService.saveSinglePhoto(new Photo(10L, "aaa", "base64testik.png"), photo);
 
 
     }
