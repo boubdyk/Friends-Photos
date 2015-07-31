@@ -1,4 +1,4 @@
-package com.bionic.friendsphotos.web.REST;
+package com.bionic.friendsphotos.web.rest;
 
 
 import com.bionic.friendsphotos.service.DevicesService;
@@ -11,17 +11,22 @@ import org.json.simple.parser.ParseException;
 import javax.ws.rs.Path;
 import javax.ws.rs.POST;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Produces;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.QueryParam;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Vlad on 23.07.2015.
  */
 
-@Path("/group_rest")
-public class GroupServiceREST {
+@Path("/group")
+public class GroupRestService {
     /**
      * Creating object GroupService for accessing to it's methods.
      */
@@ -57,6 +62,7 @@ public class GroupServiceREST {
     public final Response createOpenGroup(final String input) {
 
         JSONObject jsonObject = parse(input);
+
         String groupName = (String) jsonObject.get("groupName");
         Byte groupType = (Byte) jsonObject.get("groupType");
         String password = (String) jsonObject.get("password");
@@ -113,6 +119,34 @@ public class GroupServiceREST {
         } else {
             return Response.status(notCreate).build();
         }
+    }
+
+    @GET
+    @Path("/search")
+    @Produces(MediaType.APPLICATION_JSON)
+    public final List searchGroupByName(@QueryParam("searchValue") String searchValue) {
+
+//        JSONObject jsonObject = parse(input);
+//        String searchValue = (String) jsonObject.get("searchValue");
+//        Double latitude = (Double) jsonObject.get("latitude");
+//        Double longitude = (Double) jsonObject.get("longitude");
+
+        List list = gs.getAllGroupsByNameOrID(searchValue);
+        if (list == null) {
+            List list1 = new LinkedList<String>();
+            list1.add("Group not found!");
+            return  list1;
+        } else {
+            return list;
+        }
+//        if (searchValue != null) {
+//            return searchValue;
+//        } else if (latitude != null && longitude != null) {
+//            return gs.getAllGroupsByGPS(latitude, longitude);
+//        } else {
+//            return null;
+//        }
+
     }
 
     /**

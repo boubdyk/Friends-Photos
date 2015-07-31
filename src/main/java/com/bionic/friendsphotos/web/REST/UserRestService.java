@@ -1,4 +1,4 @@
-package com.bionic.friendsphotos.web.REST;
+package com.bionic.friendsphotos.web.rest;
 
 import com.bionic.friendsphotos.service.DevicesService;
 import com.bionic.friendsphotos.service.GroupService;
@@ -24,8 +24,8 @@ import java.util.Map;
  * Created by Vlad on 23.07.2015.
  */
 
-@Path("/users_rest")
-public class UserService {
+@Path("/users")
+public class UserRestService {
 
     private DevicesService ds = new DevicesService();
     private GroupService gs = new GroupService();
@@ -65,16 +65,18 @@ public class UserService {
     @Path("/first_opening")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public final Response firstOpen(final String input) {
+    public final Response firstOpen(String input) throws ParseException {
 
-        JSONObject jsonObject = parse(input);
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(input);
+        JSONObject jsonObject = (JSONObject) obj;
+
         String deviceId = (String) jsonObject.get("deviceId");
 
         Map<String, Object> map = ds.getCurrentGroupAndUserName(deviceId);
         if (map == null) {
             return Response.status(notCreate).build();
         } else {
-            String result = "Device saved: " + deviceId;
             return Response.status(created).entity(map).build();
         }
     }
@@ -88,15 +90,19 @@ public class UserService {
         String deviceId = (String) jsonObject.get("deviceId");
         String userName = (String) jsonObject.get("userName");
         String description = (String) jsonObject.get("description");
-        BigInteger fbProfile = (BigInteger) jsonObject.get("fbProfile");
+        String fbProfile = (String) jsonObject.get("fbProfile");
 
-        boolean login =  ds.loginByFacebook(deviceId, fbProfile,
-                                            userName, description);
-        if (login) {
-            return Response.status(created).build();
-        } else {
-            return Response.status(notCreate).build();
-        }
+        BigInteger fb =  new BigInteger(fbProfile);
+
+        return Response.status(200).entity(fb).build();
+
+//        boolean login =  ds.loginByFacebook(deviceId, fbProfile,
+//                                            userName, description);
+//        if (login) {
+//            return Response.status(created).build();
+//        } else {
+//            return Response.status(notCreate).build();
+//        }
     }
 /*
     @GET
@@ -108,28 +114,7 @@ public class UserService {
     }
 */
 
-    @GET
-    @Path("/search_group_by_name_or_id")
-    @Produces(MediaType.APPLICATION_JSON)
-    public final List searchGroupByName(final String input) {
 
-        JSONObject jsonObject = parse(input);
-        String searchValue = (String) jsonObject.get("searchValue");
-
-        return gs.getAllGroupsByNameOrID(searchValue);
-    }
-
-    @GET
-    @Path("/search_group_by_gps")
-    @Produces(MediaType.APPLICATION_JSON)
-    public final List searchGroupByGPS(final String input) {
-
-        JSONObject jsonObject = parse(input);
-        Double latitude = (Double) jsonObject.get("latitude");
-        Double longitude = (Double) jsonObject.get("longitude");
-
-        return gs.getAllGroupsByGPS(latitude, longitude);
-    }
 
     @POST
     @Path("/connect_to_open_group")
@@ -140,12 +125,13 @@ public class UserService {
         String deviceId = (String) jsonObject.get("deviceId");
         Long groupId = (Long) jsonObject.get("groupId");
 
-        boolean ans = ds.connectUserToOpenGroup(deviceId, groupId);
-        if (ans) {
-            return Response.status(ok).build();
-        } else {
-            return Response.status(notCreate).build();
-        }
+//        boolean ans = ds.connectUserToOpenGroup(deviceId, groupId);
+//        if (ans) {
+//            return Response.status(ok).build();
+//        } else {
+//            return Response.status(notCreate).build();
+//        }
+        return Response.status(200).entity(groupId).build();
     }
 
 

@@ -22,7 +22,7 @@ import java.util.*;
 public class BrowseData {
 //    static GroupService groupService = new GroupService();
 //    static DevicesService devicesService = new DevicesService();
-//    static PhotoService photoService = new PhotoService();
+//    static PhotoRestService photoService = new PhotoRestService();
 
 
     private static ApplicationContext context;

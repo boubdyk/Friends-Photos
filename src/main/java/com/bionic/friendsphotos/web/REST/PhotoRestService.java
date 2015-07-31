@@ -1,4 +1,4 @@
-package com.bionic.friendsphotos.web.REST;
+package com.bionic.friendsphotos.web.rest;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
@@ -17,9 +17,9 @@ import java.io.InputStream;
  * Created by Vlad on 23.07.2015.
  */
 
-@Path("/photo_rest")
-public class PhotoService {
-    private PhotoService ps = new PhotoService();
+@Path("/photo")
+public class PhotoRestService {
+    private PhotoRestService ps = new PhotoRestService();
     private final int created = 201;
 
     @GET
