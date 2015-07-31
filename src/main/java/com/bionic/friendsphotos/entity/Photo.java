@@ -3,12 +3,11 @@ package com.bionic.friendsphotos.entity;
 import javax.persistence.*;
 
 /**
- * Created by c267 on 21.07.2015.
+ * Created by Yevhenii Semenov on 21.07.2015.
  */
 
 @Entity
 @Table(name = "photos")
-//@NamedQuery(name = "Photo.getAll", query = "SELECT p from Group p")
 public class Photo {
 
     @Id
@@ -70,5 +69,15 @@ public class Photo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Photo{" +
+                "id=" + id +
+                ", groupId=" + groupId +
+                ", ownerId='" + ownerId + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -47,8 +47,8 @@ public class GroupService {
      *
      * @param id Unique identifier of group.
      *
-     * @return null If group doesn't exist.
-     * @return Group object If group exists.
+     * @return 1. Null If group doesn't exist.
+     *         2. Group object If group exists.
      */
     public Group findById(Long id) {
         if (id == null) return null;
@@ -62,8 +62,8 @@ public class GroupService {
      * This method is used to update group in DB.
      *
      * @param group Group object to update.
-     * @return null If group doesn't exist.
-     * @return Group object of updated group.
+     * @return 1. Null If group doesn't exist.
+     *         2. Group object of updated group.
      */
 
     public Group updateGroup(Group group) {
@@ -91,8 +91,8 @@ public class GroupService {
      * This method is used to get Name of requested group.
      *
      * @param id Unique group identifier.
-     * @return null If group doesn't exist.
-     * @return Name of requested group.
+     * @return 1. Null If group doesn't exist.
+     *         2. Name of requested group.
      */
     public String getNameById(Long id) {
         if (id == null) return null;
@@ -106,8 +106,8 @@ public class GroupService {
      * This method is used to get all devices of requested group.
      *
      * @param id Unique group identifier
-     * @return null If group doesn't exist.
-     * @return List of all devices of requested group.
+     * @return 1. Null If group doesn't exist.
+     *         2. List of all devices of requested group.
      */
     public List<Device> getAllDevices(Long id) {
         if (id == null) return null;
@@ -162,7 +162,7 @@ public class GroupService {
      * @param coordinateY Y coordinate of requested device.
      *
      * @return Long This returns unique identifier of just created group.
-     * @return null 1. If groupName equals null;
+     *         Null 1. If groupName equals null;
      *              2. If groupType null or != [0, 1, 2];
      *              3. If groupType equals 1 but password is null or empty;
      *              4. If creatorId is null;
@@ -192,7 +192,7 @@ public class GroupService {
      *
      * @param searchValue String search value which can be group-name or group-id
      *
-     * @return null 1. If searchValue reference is null;
+     * @return Null 1. If searchValue reference is null;
      *              2. If searchValue is empty;
      *              3. If there are no groups with such name or id.
      * @exception  NumberFormatException On parsing searchValue to Long (searching by group id)
@@ -246,9 +246,9 @@ public class GroupService {
      * @param latitude Latitude of requested device
      * @param longitude Longitude of requested device
      *
-     * @return null 1. If latitude or longitude is null;
+     * @return Null 1. If latitude or longitude is null;
      *              2. If there are no groups wihin radius of 1 km
-     * @return List of groups within radius of 1 km.
+     *         List of groups within radius of 1 km.
      */
     public List<Group> getAllGroupsByGPS(Double latitude, Double longitude) {
         if (latitude == null || longitude == null) return null;
