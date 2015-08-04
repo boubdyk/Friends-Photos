@@ -4,9 +4,7 @@ import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.*;
 
 /**
@@ -15,36 +13,37 @@ import java.util.*;
 
 @Repository
 public class DeviceDao implements GenericDao <Device, String> {
+    public DeviceDao(){}
 
-    @PersistenceContext
-    private EntityManager em;
+    @PersistenceContext(unitName = "entityManager")
+//    @PersistenceUnit(unitName = "entityManager")
+//    private EntityManagerFactory emf;
+    private EntityManager entityManager; /*= emf.createEntityManager();*/
 
     @Override
     public String create(Device newInstance) {
-        em.persist(newInstance);
+        entityManager.persist(newInstance);
         return newInstance.getIdDevice();
     }
 
     @Override
     public Device read(String id) {
-        return em.find(Device.class, id);
+        return entityManager.find(Device.class, id);
     }
 
     @Override
     public Device update(Device transientObject) {
-        em.merge(transientObject);
+        entityManager.merge(transientObject);
         return transientObject;
     }
 
     @Override
     public void delete(String idDevice) {
-//        em.getTransaction().begin();
-        em.remove(read(idDevice));
-//        em.getTransaction().commit();
+        entityManager.remove(read(idDevice));
     }
 
     public List<Device> getAll() {
-        TypedQuery<Device> namedQuery = em.createNamedQuery("Device.getAll", Device.class);
+        TypedQuery<Device> namedQuery = entityManager.createNamedQuery("Device.getAll", Device.class);
         return namedQuery.getResultList();
     }
 

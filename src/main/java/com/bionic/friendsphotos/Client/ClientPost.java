@@ -17,17 +17,17 @@ public class ClientPost {
             Client client = Client.create();
 
             WebResource webResource = client
-                    .resource("http://localhost:8080/FriendsPhotos/rest/users/login_by_fb");
+                    .resource("http://localhost:8080/FriendsPhotos/rest/users/first_opening");
 
-            String input = "{\"fbProfile\":\"848676\"}";
+            String input = "{\"deviceId\":\"bbb\"}";
 
             ClientResponse response = webResource.type("application/json")
                     .post(ClientResponse.class, input);
 
-            if (response.getStatus() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + response.getStatus());
-            }
+//            if (response.getStatus() != 200) {
+//                throw new RuntimeException("Failed : HTTP error code : "
+//                        + response.getStatus());
+//            }
 
             System.out.println("Output from Server .... \n");
             String output = response.getEntity(String.class);

@@ -3,9 +3,12 @@ package com.bionic.friendsphotos.web.rest;
 import com.bionic.friendsphotos.service.DevicesService;
 import com.bionic.friendsphotos.service.GroupService;
 
+import com.bionic.friendsphotos.service.PhotoService;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.POST;
@@ -27,12 +30,24 @@ import java.util.Map;
 @Path("/users")
 public class UserRestService {
 
-    private DevicesService ds = new DevicesService();
-    private GroupService gs = new GroupService();
+//    private static DevicesService ds = new DevicesService();
+//    private GroupService gs = new GroupService();
 
     private final int notCreate = 304;
     private final int created = 201;
     private final int ok = 200;
+
+    private static ApplicationContext context;
+    private static GroupService gs;
+    private static DevicesService ds;
+    private static PhotoService photoService;
+
+    static {
+        context = new ClassPathXmlApplicationContext("META-INF/app-context.xml");
+        gs = context.getBean(GroupService.class);
+        ds = context.getBean(DevicesService.class);
+        photoService = context.getBean(PhotoService.class);
+    }
 
 /*
     @POST
@@ -66,6 +81,7 @@ public class UserRestService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public final Response firstOpen(String input) throws ParseException {
+        System.out.println(input);
 
         JSONParser parser = new JSONParser();
         Object obj = parser.parse(input);
@@ -176,5 +192,10 @@ public class UserRestService {
             pe.printStackTrace();
             return null;
         }
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println(ds.getCurrentGroupAndUserName("bbb"));
     }
 }

@@ -4,9 +4,7 @@ import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.*;
 
 /**
@@ -16,8 +14,10 @@ import java.util.*;
 @Repository
 public class GroupDao implements GenericDao <Group, Long> {
 
-    @PersistenceContext
-    private EntityManager em;
+    @PersistenceContext(unitName = "entityManager")
+//    @PersistenceUnit(unitName = "entityManager")
+//    private EntityManagerFactory emf;
+    private EntityManager entityManager;/* = emf.createEntityManager();*/
 
     public GroupDao() {
     }
@@ -25,34 +25,34 @@ public class GroupDao implements GenericDao <Group, Long> {
 
     @Override
     public Long create(Group newInstance) {
-        em.persist(newInstance);
+        entityManager.persist(newInstance);
         return newInstance.getId();
     }
 
 
     @Override
     public Group read(Long id) {
-        return em.find(Group.class, id);
+        return entityManager.find(Group.class, id);
     }
 
     @Override
     public Group update(Group group) {
-        return em.merge(group);
+        return entityManager.merge(group);
     }
 
     @Override
     public void delete(Long id) {
         Group obj = read(id);
-        em.remove(obj);
+        entityManager.remove(obj);
     }
 
     public List<Group> getAll() {
-        TypedQuery<Group> namedQuery = em.createNamedQuery("Group.getAll", Group.class);
+        TypedQuery<Group> namedQuery = entityManager.createNamedQuery("Group.getAll", Group.class);
         return namedQuery.getResultList();
     }
 
     public String getNameById(Long id) {
-        return em.find(Group.class, id).getName();
+        return entityManager.find(Group.class, id).getName();
     }
 
     public List<Device> getAllDevicesFromGroup(Long groupId) {

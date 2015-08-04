@@ -32,7 +32,7 @@ public class Device {
     @Column(name = "current_group")
     Long currentGroup;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "devices_in_groups",
             joinColumns = {@JoinColumn(name = "device_id", referencedColumnName = "id_device")},
             inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")})

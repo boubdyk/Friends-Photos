@@ -5,6 +5,7 @@ import com.bionic.friendsphotos.dao.GroupDao;
 import com.bionic.friendsphotos.entity.Device;
 import com.bionic.friendsphotos.entity.Group;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -20,11 +21,13 @@ import java.util.*;
 @Transactional
 public class DevicesService {
 
-    @Inject
-    private DeviceDao devicesDao;
+//    @Inject
+    @Autowired
+    private DeviceDao devicesDao; /*= new DeviceDao();*/
 
-    @Inject
-    private GroupDao groupDao;
+//    @Inject
+    @Autowired
+    private GroupDao groupDao;/* = new GroupDao();*/
 
     public DevicesService() {
     }
@@ -54,8 +57,8 @@ public class DevicesService {
      *         2. Sought-for device object.
      */
     public Device findById(String id) {
-        if (StringUtils.isEmpty(id)) return null;
-        return devicesDao.read(id);
+        // if (StringUtils.isEmpty(id)) return null;
+        return devicesDao.read("bbb");
     }
 
     /**

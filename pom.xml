@@ -29,11 +29,11 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>4.2.1.Final</version>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>1.0.1.Final</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate.javax.persistence</groupId>-->
+            <!--<artifactId>hibernate-jpa-2.0-api</artifactId>-->
+            <!--<version>1.0.1.Final</version>-->
+        <!--</dependency>-->
 
         <!-- Jersey -->
 
@@ -131,6 +131,12 @@
             <artifactId>spring-orm</artifactId>
             <version>3.2.3.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>3.0.5.RELEASE</version>
+        </dependency>
+
 
         <!-- JSR-330 -->
         <dependency>
